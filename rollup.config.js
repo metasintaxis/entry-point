@@ -2,7 +2,7 @@ import lwc from "@lwc/rollup-plugin";
 import replace from "@rollup/plugin-replace";
 
 export default {
-    input: "src/client/main.js",
+    input: "src/lwc/main.js",
 
     output: {
         file: "src/client/dist/index.js",

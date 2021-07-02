@@ -5,7 +5,7 @@
   "main": "src/server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/server"
+    "start": "npx rollup --config rollup.config.js && node ./src/server"
   },
   "keywords": [
     "personal-portfolio",

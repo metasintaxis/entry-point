@@ -7138,14 +7138,115 @@
   seal$2(LightningElement.prototype);
   /* version: 2.2.5 */
 
-  function tmpl($api, $cmp, $slotset, $ctx) {
+  function stylesheet$1(hostSelector, shadowSelector, nativeShadow) {
+    return [".main-presentation", shadowSelector, " {flex: 11 0 91%;position: relative;max-width: 91%;}.main-navigation", shadowSelector, " {flex: 1 0 8.3%;position: relative;}.main", shadowSelector, " {height: 100%;max-height: 100%;max-width: 100%;overflow: hidden;display: flex;flex-flow: row wrap;background-color: var(--flat-white);}.main-title", shadowSelector, " {display: flex;align-items: center;height: 5rem;padding: 2rem;font-family: var(--title-font-family);text-align: center;color: var(--light-text-content);width: 100%;min-width: 0;}.main-title", shadowSelector, " > div", shadowSelector, " {display: flex;align-items: center;justify-content: center;min-height: 2rem;min-height: 2rem;cursor: pointer;width: 4rem;}.main-title__gap", shadowSelector, " {margin: auto;min-width: 0;}.main-button__context", shadowSelector, " {border-radius: 50%;max-height: 4rem;display: flex;align-items: center;padding: 0.5rem;cursor: pointer;box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);}.main-container", shadowSelector, " {font-family: var(--content-font-family);color: var(--main-content-color-light);overflow: auto;display: flex;flex-flow: row wrap;position: relative;height: 100%;max-height: 100%;}.main-content__home", shadowSelector, " {scroll-behavior: smooth;height: 100%;overflow-y: scroll;}.main-container__sidebar", shadowSelector, " {flex: 1.5 0 0;margin-right: 1rem;animation: var(--animation-fade-in) 1s;position: relative;display: flex;flex-flow: column wrap;}.sidebar__top", shadowSelector, " {flex: 8 0 0;}.sidebar__bottom", shadowSelector, " {flex: 2 0 0;display: flex;flex-flow: row wrap;}", shadowSelector, "::-webkit-scrollbar {display: none;}.main-container__content", shadowSelector, " {scrollbar-width: none;position: relative;padding: 2rem;overflow: scroll;flex: 6 0 0;height: 90%;max-height: 90%;}.colective-mention", shadowSelector, " {color: var(--main-sidebar-color-pink);}.main-container__leftover", shadowSelector, " {flex: 1;margin-left: 1rem;}.main-header", shadowSelector, " {display: flex;min-height: 5rem;position: sticky;flex-flow: row nowrap;top: 0;z-index: 10;}.colective-bold", shadowSelector, " {color: var(--light-blue);}.container__vertical", shadowSelector, " {position: relative;display: flex;flex-direction: column;min-height: 100%;height: 100%;}"].join('');
+  }
+  var _implicitStylesheets$1 = [stylesheet$1];
+
+  function stylesheet(hostSelector, shadowSelector, nativeShadow) {
+    return [".main-header__logo", shadowSelector, " {flex: 2 0 0;display: flex;align-items: center;justify-content: center;margin: 5px;animation: var(--animation-fade-in) var(--fade-in-duration);}.logo__text", shadowSelector, " {font: var(--text-logo);color: var(--light-headers);letter-spacing: 2px;}.main-header__gap", shadowSelector, " {flex: 10 0 0;}"].join('');
+  }
+  var _implicitStylesheets = [stylesheet];
+
+  function tmpl$1($api, $cmp, $slotset, $ctx) {
     const {t: api_text, h: api_element} = $api;
-    return [api_element("h1", {
+    return [api_element("div", {
+      classMap: {
+        "main-header__logo": true
+      },
       key: 0
-    }, [api_text("Hello world")])];
+    }, [api_element("div", {
+      classMap: {
+        "logo__text": true
+      },
+      key: 1
+    }, [api_text("the humble crm programmer")])]), api_element("div", {
+      classMap: {
+        "main-header__gap": true
+      },
+      key: 2
+    }, [])];
+  }
+  var _tmpl$1 = registerTemplate(tmpl$1);
+  tmpl$1.stylesheets = [];
+
+
+  if (_implicitStylesheets) {
+    tmpl$1.stylesheets.push.apply(tmpl$1.stylesheets, _implicitStylesheets);
+  }
+  tmpl$1.stylesheetTokens = {
+    hostAttribute: "wired-header_header-host",
+    shadowAttribute: "wired-header_header"
+  };
+
+  class Header extends LightningElement {}
+
+  var _wiredHeader = registerComponent(Header, {
+    tmpl: _tmpl$1
+  });
+
+  function tmpl($api, $cmp, $slotset, $ctx) {
+    const {c: api_custom_element, h: api_element} = $api;
+    return [api_element("div", {
+      classMap: {
+        "main": true
+      },
+      key: 0
+    }, [api_element("div", {
+      classMap: {
+        "main-presentation": true,
+        "container__vertical": true
+      },
+      key: 1
+    }, [api_custom_element("wired-header", _wiredHeader, {
+      classMap: {
+        "main-header": true
+      },
+      key: 2
+    }, []), api_element("section", {
+      classMap: {
+        "main-container": true
+      },
+      key: 3
+    }, [api_element("div", {
+      classMap: {
+        "main-container__sclassebar": true
+      },
+      key: 4
+    }, [api_element("div", {
+      classMap: {
+        "sclassebar__top": true
+      },
+      key: 5
+    }, []), api_element("div", {
+      classMap: {
+        "sclassebar__bottom": true
+      },
+      key: 6
+    }, [])]), api_element("div", {
+      classMap: {
+        "main-container__content": true
+      },
+      key: 7
+    }, []), api_element("div", {
+      classMap: {
+        "main-container__leftover": true
+      },
+      key: 8
+    }, [])])]), api_element("div", {
+      classMap: {
+        "main-navigation": true
+      },
+      key: 9
+    }, [])])];
   }
   var _tmpl = registerTemplate(tmpl);
   tmpl.stylesheets = [];
+
+
+  if (_implicitStylesheets$1) {
+    tmpl.stylesheets.push.apply(tmpl.stylesheets, _implicitStylesheets$1);
+  }
   tmpl.stylesheetTokens = {
     hostAttribute: "wired-app_app-host",
     shadowAttribute: "wired-app_app"

@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@700&display=swap');
+
+:root {
+	/* Font-related variables */
+	--title-font-family: 'Roboto Mono', monospace;
+	--content-font-family: 'PT Sans', sans-serif;
+
+	--text-logo: normal small-caps 900 1.6rem 'Roboto Mono', monospace;
+	--sidebar-item: normal normal 300 1rem 'Roboto Mono', monospace;
+
+	/* Material design elevation */
+	--elevation-2dp: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+		0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+		0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+	--elevation-3dp: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+		0 3px 3px -2px rgba(0, 0, 0, 0.12), 0 1px 8px 0 rgba(0, 0, 0, 0.2);
+
+	/* Animations */
+	--animation-fade-in: fadeIn;
+	--fade-in-duration: 2s;
+
+	--animation-fade-in-up: fadeInUp;
+	--fade-in-up-duration: 2s;
+}
+
+/* Colors */
+:root {
+	/* Dark color theme */
+	--light-background: #f3f3f4;
+	--background-color: var(--light-background);
+	--light-text-content: #636363;
+	--light-headers: #636363;
+	--light-blue: #00fff0;
+	--light-green: #4ae3b5;
+
+	--flat-black: #000000;
+	--flat-gray: #707070;
+	--flat-white: #f3f3f4;
+	--flat-red: #c75c5c;
+	--flat-orange: #e0995e;
+	--flat-blue: #4f5d73;
+	--flat-blue-aqua: #77b3d4;
+	--flat-green: #76c2af;
+	--flat-yellow: #f5cf87;
+
+	--main-sidebar-color-pink: #fd0054;
+	--main-sidebar-icon-white: #fbf9fa;
+	--main-content-color-light: var(--light-dark-text-content);
+	--main-title-font-size: 4rem;
+	--small-headers: 1.2rem;
+}
+
+:root * {
+	/* Avoid size calculation based on margins and padding */
+	box-sizing: border-box;
+
+	/* Hide scrollbar for Firefox and IE/Edge respectively  */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	display: none;
+}
+
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	max-height: 100%;
+}
+
+:focus {
+	outline: none;
+}
+::-moz-focus-inner {
+	border: 0;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+#main-presentation {
+	animation: var(--animation-fade-in) 1s;
+}
+
+@keyframes fadeInUp {
+	from {
+		transform: translate3d(0, 40px, 0);
+		opacity: 0;
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+}
