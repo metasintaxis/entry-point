@@ -1,0 +1,24 @@
+{
+  "name": "face-on-the-wired",
+  "version": "0.0.1",
+  "description": "Digital identity on the wired! I know you are watching, Lain.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server"
+  },
+  "keywords": [
+    "personal-portfolio",
+    "sales",
+    "wired"
+  ],
+  "author": "AlbertoMata",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^2.52.6",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
