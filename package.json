@@ -1,11 +1,11 @@
 {
   "name": "face-on-the-wired",
   "version": "0.0.1",
-  "description": "Digital identity on the wired! I know you are watching, Lain.",
-  "main": "index.js",
+  "description": "Digital identity on the wired! We know you are watching, Lain.",
+  "main": "src/server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./server"
+    "start": "node ./src/server"
   },
   "keywords": [
     "personal-portfolio",
