@@ -4,7 +4,6 @@
 	align-items: center;
 	justify-content: center;
 	margin: 5px;
-
 	animation: var(--animation-fade-in) var(--fade-in-duration);
 }
 

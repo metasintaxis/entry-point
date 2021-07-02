@@ -7138,13 +7138,64 @@
   seal$2(LightningElement.prototype);
   /* version: 2.2.5 */
 
-  function stylesheet$1(hostSelector, shadowSelector, nativeShadow) {
+  function stylesheet$2(hostSelector, shadowSelector, nativeShadow) {
     return [".main-presentation", shadowSelector, " {flex: 11 0 91%;position: relative;max-width: 91%;}.main-navigation", shadowSelector, " {flex: 1 0 8.3%;position: relative;}.main", shadowSelector, " {height: 100%;max-height: 100%;max-width: 100%;overflow: hidden;display: flex;flex-flow: row wrap;background-color: var(--flat-white);}.main-title", shadowSelector, " {display: flex;align-items: center;height: 5rem;padding: 2rem;font-family: var(--title-font-family);text-align: center;color: var(--light-text-content);width: 100%;min-width: 0;}.main-title", shadowSelector, " > div", shadowSelector, " {display: flex;align-items: center;justify-content: center;min-height: 2rem;min-height: 2rem;cursor: pointer;width: 4rem;}.main-title__gap", shadowSelector, " {margin: auto;min-width: 0;}.main-button__context", shadowSelector, " {border-radius: 50%;max-height: 4rem;display: flex;align-items: center;padding: 0.5rem;cursor: pointer;box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);}.main-container", shadowSelector, " {font-family: var(--content-font-family);color: var(--main-content-color-light);overflow: auto;display: flex;flex-flow: row wrap;position: relative;height: 100%;max-height: 100%;}.main-content__home", shadowSelector, " {scroll-behavior: smooth;height: 100%;overflow-y: scroll;}.main-container__sidebar", shadowSelector, " {flex: 1.5 0 0;margin-right: 1rem;animation: var(--animation-fade-in) 1s;position: relative;display: flex;flex-flow: column wrap;}.sidebar__top", shadowSelector, " {flex: 8 0 0;}.sidebar__bottom", shadowSelector, " {flex: 2 0 0;display: flex;flex-flow: row wrap;}", shadowSelector, "::-webkit-scrollbar {display: none;}.main-container__content", shadowSelector, " {scrollbar-width: none;position: relative;padding: 2rem;overflow: scroll;flex: 6 0 0;height: 90%;max-height: 90%;}.colective-mention", shadowSelector, " {color: var(--main-sidebar-color-pink);}.main-container__leftover", shadowSelector, " {flex: 1;margin-left: 1rem;}.main-header", shadowSelector, " {display: flex;min-height: 5rem;position: sticky;flex-flow: row nowrap;top: 0;z-index: 10;}.colective-bold", shadowSelector, " {color: var(--light-blue);}.container__vertical", shadowSelector, " {position: relative;display: flex;flex-direction: column;min-height: 100%;height: 100%;}"].join('');
+  }
+  var _implicitStylesheets$2 = [stylesheet$2];
+
+  function stylesheet$1(hostSelector, shadowSelector, nativeShadow) {
+    return [".main-header__logo", shadowSelector, " {flex: 2 0 0;display: flex;align-items: center;justify-content: center;margin: 5px;animation: var(--animation-fade-in) var(--fade-in-duration);}.logo__text", shadowSelector, " {font: var(--text-logo);color: var(--light-headers);letter-spacing: 2px;}.main-header__gap", shadowSelector, " {flex: 10 0 0;}"].join('');
   }
   var _implicitStylesheets$1 = [stylesheet$1];
 
+  function tmpl$2($api, $cmp, $slotset, $ctx) {
+    const {h: api_element} = $api;
+    return [api_element("div", {
+      classMap: {
+        "main-header__logo": true
+      },
+      context: {
+        lwc: {
+          dom: "manual"
+        }
+      },
+      key: 0
+    }, []), api_element("div", {
+      classMap: {
+        "main-header__gap": true
+      },
+      key: 1
+    }, [])];
+  }
+  var _tmpl$2 = registerTemplate(tmpl$2);
+  tmpl$2.stylesheets = [];
+
+
+  if (_implicitStylesheets$1) {
+    tmpl$2.stylesheets.push.apply(tmpl$2.stylesheets, _implicitStylesheets$1);
+  }
+  tmpl$2.stylesheetTokens = {
+    hostAttribute: "wired-header_header-host",
+    shadowAttribute: "wired-header_header"
+  };
+
+  class Header extends LightningElement {
+    connectedCallback() {}
+
+    renderedCallback() {
+      const foo = this.template.querySelector('.main-header__logo');
+      console.log('foo', foo);
+      foo.innerHTML = 'jojo';
+    }
+
+  }
+
+  var _wiredHeader = registerComponent(Header, {
+    tmpl: _tmpl$2
+  });
+
   function stylesheet(hostSelector, shadowSelector, nativeShadow) {
-    return [".main-header__logo", shadowSelector, " {flex: 2 0 0;display: flex;align-items: center;justify-content: center;margin: 5px;animation: var(--animation-fade-in) var(--fade-in-duration);}.logo__text", shadowSelector, " {font: var(--text-logo);color: var(--light-headers);letter-spacing: 2px;}.main-header__gap", shadowSelector, " {flex: 10 0 0;}"].join('');
+    return [".home-text__presentation", shadowSelector, " {padding: 5rem;text-align: center;animation: var(--animation-fade-in-up) var(--fade-in-up-duration);font-size: 3.5vh;height: 95%;}"].join('');
   }
   var _implicitStylesheets = [stylesheet];
 
@@ -7152,20 +7203,17 @@
     const {t: api_text, h: api_element} = $api;
     return [api_element("div", {
       classMap: {
-        "main-header__logo": true
+        "home-text__presentation": true
       },
       key: 0
-    }, [api_element("div", {
-      classMap: {
-        "logo__text": true
-      },
+    }, [api_element("p", {
       key: 1
-    }, [api_text("the humble crm programmer")])]), api_element("div", {
+    }, [api_text("El "), api_element("span", {
       classMap: {
-        "main-header__gap": true
+        "colective-mention": true
       },
       key: 2
-    }, [])];
+    }, [api_text("Colectivo Anagrama")]), api_text(" es una iniciativa cuyo propósito es consolidarse como un frente de investigación e inovación en el desarrollo de soluciones tecnológicas.")])])];
   }
   var _tmpl$1 = registerTemplate(tmpl$1);
   tmpl$1.stylesheets = [];
@@ -7175,13 +7223,13 @@
     tmpl$1.stylesheets.push.apply(tmpl$1.stylesheets, _implicitStylesheets);
   }
   tmpl$1.stylesheetTokens = {
-    hostAttribute: "wired-header_header-host",
-    shadowAttribute: "wired-header_header"
+    hostAttribute: "wired-home_home-host",
+    shadowAttribute: "wired-home_home"
   };
 
-  class Header extends LightningElement {}
+  class Home extends LightningElement {}
 
-  var _wiredHeader = registerComponent(Header, {
+  var _wiredHome = registerComponent(Home, {
     tmpl: _tmpl$1
   });
 
@@ -7228,24 +7276,29 @@
         "main-container__content": true
       },
       key: 7
-    }, []), api_element("div", {
+    }, [api_custom_element("wired-home", _wiredHome, {
+      classMap: {
+        "main-content__home": true
+      },
+      key: 8
+    }, [])]), api_element("div", {
       classMap: {
         "main-container__leftover": true
       },
-      key: 8
+      key: 9
     }, [])])]), api_element("div", {
       classMap: {
         "main-navigation": true
       },
-      key: 9
+      key: 10
     }, [])])];
   }
   var _tmpl = registerTemplate(tmpl);
   tmpl.stylesheets = [];
 
 
-  if (_implicitStylesheets$1) {
-    tmpl.stylesheets.push.apply(tmpl.stylesheets, _implicitStylesheets$1);
+  if (_implicitStylesheets$2) {
+    tmpl.stylesheets.push.apply(tmpl.stylesheets, _implicitStylesheets$2);
   }
   tmpl.stylesheetTokens = {
     hostAttribute: "wired-app_app-host",

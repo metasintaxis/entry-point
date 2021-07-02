@@ -1,20 +1,35 @@
-import lwc from "@lwc/rollup-plugin";
-import replace from "@rollup/plugin-replace";
+import lwc from '@lwc/rollup-plugin';
+import replace from '@rollup/plugin-replace';
+import run from '@rollup/plugin-run';
 
-export default {
-    input: "src/lwc/main.js",
+const dev = process.env.NODE_ENV !== 'production';
 
-    output: {
-        file: "src/client/dist/index.js",
-        format: "umd",
-    },
+export default [
+	{
+		input: 'src/lwc/main.js',
 
-    plugins: [
-        replace({
-            "process.env.NODE_ENV": JSON.stringify("development"),
-	    preventAssignment: true
-        }),
-        lwc(),
-    ],
-};
+		output: {
+			file: 'src/client/dist/index.js',
+			format: 'umd'
+		},
 
+		plugins: [
+			replace({
+				'process.env.NODE_ENV': JSON.stringify('development'),
+				preventAssignment: true
+			}),
+			lwc(),
+		]
+	},
+	{
+		input: 'src/server/index.js',
+
+		output: {
+			file: 'src/server/dist/index.js',
+			format: 'cjs'
+		},
+		plugins: [
+            dev && run()
+		]
+	}
+];
