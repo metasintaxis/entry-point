@@ -1,0 +1,11 @@
+<template>
+	<div class="section-boxes">
+		<template for:each={sections} for:item="section">
+			<wired-mark
+				key={section.title}
+				title={section.title}
+				background-color={section.backgroundColor}
+			></wired-mark>
+		</template>
+	</div>
+</template>

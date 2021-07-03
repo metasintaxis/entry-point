@@ -9,3 +9,6 @@ dist/
 
 # Default resources folder
 src/client/resources
+
+# SLDS Minified
+src/lwc/wired/slds

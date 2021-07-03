@@ -1,7 +1,6 @@
-
 import { LightningElement } from 'lwc';
 
-export default class SectionMarks extends LightningElement {
+export default class MarkList extends LightningElement {
 	sections = [
 		{
 			title: 'inicio',
@@ -46,5 +45,4 @@ export default class SectionMarks extends LightningElement {
 			animationContrast: '--flat-white'
 		}
 	];
-
 }

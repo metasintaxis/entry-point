@@ -10,7 +10,7 @@
 .home-text__presentation {
 	padding: 5rem;
 	text-align: justify;
+	font: var(--text-logo);
 	animation: var(--animation-fade-in) var(--fade-in-duration);
-	font-size: 1.5rem;
 	height: 95%;
 }

@@ -2,8 +2,9 @@
 	flex: 0 0 16%;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	/* justify-content: center; */
 	padding: 1rem 0 1rem 0;
+	width: 100%;
 }
 .mark__box {
 	width: 1rem;
@@ -15,7 +16,7 @@
 .mark__title {
 	margin-left: 1rem;
 	max-width: 2rem;
-	opacity: 0;
+	/* opacity: 0; */
 }
 .flatYellow {
 	background-color: var(--flat-yellow);
@@ -80,12 +81,7 @@
 .glitched:after {
 	animation: glitchBotom 0.5s linear 2;
 	clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-	-webkit-clip-path: polygon(
-		0 67%,
-		100% 67%,
-		100% 100%,
-		0 100%
-	);
+	-webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
 }
 
 @keyframes glitchBotom {

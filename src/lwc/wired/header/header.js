@@ -1,11 +1,9 @@
 import { LightningElement } from 'lwc';
 
 export default class Header extends LightningElement {
+	state = {};
+
 	connectedCallback() {
-
-	}
-	renderedCallback () {
-
-
+		this.state.title = 'the humble crm programmer';
 	}
 }

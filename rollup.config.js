@@ -18,7 +18,7 @@ export default [
 				'process.env.NODE_ENV': JSON.stringify('development'),
 				preventAssignment: true
 			}),
-			lwc(),
+			lwc()
 		]
 	},
 	{
@@ -28,8 +28,6 @@ export default [
 			file: 'src/server/dist/index.js',
 			format: 'cjs'
 		},
-		plugins: [
-            dev && run()
-		]
+		plugins: [dev && run()]
 	}
 ];

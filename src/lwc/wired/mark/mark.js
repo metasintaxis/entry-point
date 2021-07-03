@@ -1,12 +1,12 @@
 import { LightningElement, api, track } from 'lwc';
 
-export default class SectionMark extends LightningElement {
+export default class Mark extends LightningElement {
 	@track state = {};
 	@api get title() {
 		return this.state.title;
 	}
 
-	set title (title) {
+	set title(title) {
 		this.state.title = title;
 	}
 

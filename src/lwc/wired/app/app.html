@@ -1,16 +1,26 @@
 <template>
-	<div class="main">
-		<div class="main-presentation container__vertical" >
-			<wired-header class="main-header"> </wired-header>
-			<section class="main-container">
-				<div class="main-container__sclassebar">
-					<div class="sclassebar__top"></div>
-					<div class="sclassebar__bottom">
-						<wired-section-marks></wired-section-marks>
+	<div class="main slds-grid">
+		<div class="main-presentation container__vertical slds-size_7-of-8">
+			<wired-header
+				class="
+					main-header
+					slds-size_2-of-12
+					slds-grid slds-grid_vertical-align-center
+					slds-p-around_small
+				"
+			>
+			</wired-header>
+			<section class="main-container slds-grid">
+				<div class="main-container__sidebar slds-size_2-of-12">
+					<div class="sidebar__top"></div>
+					<div class="sidebar__bottom">
+						<wired-mark-list
+							class="slds-p-around_xx-small"
+						></wired-mark-list>
 					</div>
 				</div>
-				<div class="main-container__content">
-					<wired-home class="main-content__home" ></wired-home>
+				<div class="main-container__content slds-size_10-of-12">
+					<wired-home class="main-content__home"></wired-home>
 					<!-- <home-content
 						class="main-content__home"
 						path="home"
@@ -34,10 +44,9 @@
 						path="hackers"
 					></hackers-content> -->
 				</div>
-				<div class="main-container__leftover"></div>
 			</section>
 		</div>
-		<div class="main-navigation">
+		<div class="main-navigation slds-size_1-of-8">
 			<!-- <navigation-tiles
 				.sections="${this.nextSections}"
 				@item-select="${this.handleTileSelect}"
