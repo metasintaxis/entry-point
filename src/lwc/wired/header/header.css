@@ -1,3 +1,12 @@
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 .main-header__logo {
 	flex: 2 0 0;
 	display: flex;

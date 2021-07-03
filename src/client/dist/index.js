@@ -7144,27 +7144,27 @@
   var _implicitStylesheets$2 = [stylesheet$2];
 
   function stylesheet$1(hostSelector, shadowSelector, nativeShadow) {
-    return [".main-header__logo", shadowSelector, " {flex: 2 0 0;display: flex;align-items: center;justify-content: center;margin: 5px;animation: var(--animation-fade-in) var(--fade-in-duration);}.logo__text", shadowSelector, " {font: var(--text-logo);color: var(--light-headers);letter-spacing: 2px;}.main-header__gap", shadowSelector, " {flex: 10 0 0;}"].join('');
+    return ["@keyframes fadeIn {from {opacity: 0;}to {opacity: 1;}}.main-header__logo", shadowSelector, " {flex: 2 0 0;display: flex;align-items: center;justify-content: center;margin: 5px;animation: var(--animation-fade-in) var(--fade-in-duration);}.logo__text", shadowSelector, " {font: var(--text-logo);color: var(--light-headers);letter-spacing: 2px;}.main-header__gap", shadowSelector, " {flex: 10 0 0;}"].join('');
   }
   var _implicitStylesheets$1 = [stylesheet$1];
 
   function tmpl$2($api, $cmp, $slotset, $ctx) {
-    const {h: api_element} = $api;
+    const {t: api_text, h: api_element} = $api;
     return [api_element("div", {
       classMap: {
         "main-header__logo": true
       },
-      context: {
-        lwc: {
-          dom: "manual"
-        }
-      },
       key: 0
-    }, []), api_element("div", {
+    }, [api_element("div", {
+      classMap: {
+        "logo__text": true
+      },
+      key: 1
+    }, [api_text("the humble crm programmer")])]), api_element("div", {
       classMap: {
         "main-header__gap": true
       },
-      key: 1
+      key: 2
     }, [])];
   }
   var _tmpl$2 = registerTemplate(tmpl$2);
@@ -7182,11 +7182,7 @@
   class Header extends LightningElement {
     connectedCallback() {}
 
-    renderedCallback() {
-      const foo = this.template.querySelector('.main-header__logo');
-      console.log('foo', foo);
-      foo.innerHTML = 'jojo';
-    }
+    renderedCallback() {}
 
   }
 
@@ -7195,7 +7191,7 @@
   });
 
   function stylesheet(hostSelector, shadowSelector, nativeShadow) {
-    return [".home-text__presentation", shadowSelector, " {padding: 5rem;text-align: center;animation: var(--animation-fade-in-up) var(--fade-in-up-duration);font-size: 3.5vh;height: 95%;}"].join('');
+    return ["@keyframes fadeIn {from {opacity: 0;}to {opacity: 1;}}.home-text__presentation", shadowSelector, " {padding: 5rem;text-align: justify;animation: var(--animation-fade-in) var(--fade-in-duration);font-size: 3.5vh;height: 95%;}"].join('');
   }
   var _implicitStylesheets = [stylesheet];
 
@@ -7208,12 +7204,7 @@
       key: 0
     }, [api_element("p", {
       key: 1
-    }, [api_text("El "), api_element("span", {
-      classMap: {
-        "colective-mention": true
-      },
-      key: 2
-    }, [api_text("Colectivo Anagrama")]), api_text(" es una iniciativa cuyo propósito es consolidarse como un frente de investigación e inovación en el desarrollo de soluciones tecnológicas.")])])];
+    }, [api_text("Welcome to this site, this is a proof of concept site to experiment with new features of ES6, Web Components and modern CSS. There is a list of interesting technologies that give this page its look:")])])];
   }
   var _tmpl$1 = registerTemplate(tmpl$1);
   tmpl$1.stylesheets = [];

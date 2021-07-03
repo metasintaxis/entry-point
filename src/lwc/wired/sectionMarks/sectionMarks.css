@@ -1,0 +1,14 @@
+section-marks {
+	flex: 1 0 0;
+	display: flex;
+	flex-flow: row nowrap;
+}
+.section-boxes {
+	flex: 1 0 0;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: flex-end;
+}
+.section-boxes__gap {
+	flex: 1 0 0;
+}

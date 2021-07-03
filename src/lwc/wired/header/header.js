@@ -6,12 +6,6 @@ export default class Header extends LightningElement {
 	}
 	renderedCallback () {
 
-		const foo = this.template.querySelector('.main-header__logo');
-
-		console.log('foo', foo);
-
-
-		foo.innerHTML = 'jojo';
 
 	}
 }

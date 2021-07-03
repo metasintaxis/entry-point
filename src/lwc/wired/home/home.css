@@ -1,7 +1,16 @@
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 .home-text__presentation {
 	padding: 5rem;
-	text-align: center;
-	animation: var(--animation-fade-in-up) var(--fade-in-up-duration);
+	text-align: justify;
+	animation: var(--animation-fade-in) var(--fade-in-duration);
 	font-size: 3.5vh;
 	height: 95%;
 }
