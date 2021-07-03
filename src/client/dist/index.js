@@ -2874,6 +2874,230 @@
   {
     patchLightningElementPrototypeWithRestrictions(LightningElement.prototype);
   }
+
+  function internalWireFieldDecorator(key) {
+    return {
+      get() {
+        const vm = getAssociatedVM(this);
+        componentValueObserved(vm, key);
+        return vm.cmpFields[key];
+      },
+
+      set(value) {
+        const vm = getAssociatedVM(this);
+        /**
+         * Reactivity for wired fields is provided in wiring.
+         * We intentionally add reactivity here since this is just
+         * letting the author to do the wrong thing, but it will keep our
+         * system to be backward compatible.
+         */
+
+        if (value !== vm.cmpFields[key]) {
+          vm.cmpFields[key] = value;
+          componentValueMutated(vm, key);
+        }
+      },
+
+      enumerable: true,
+      configurable: true
+    };
+  }
+
+  function internalTrackDecorator(key) {
+    return {
+      get() {
+        const vm = getAssociatedVM(this);
+        componentValueObserved(vm, key);
+        return vm.cmpFields[key];
+      },
+
+      set(newValue) {
+        const vm = getAssociatedVM(this);
+
+        {
+          const vmBeingRendered = getVMBeingRendered();
+          assert.invariant(!isInvokingRender, `${vmBeingRendered}.render() method has side effects on the state of ${vm}.${toString$1(key)}`);
+          assert.invariant(!isUpdatingTemplate, `Updating the template of ${vmBeingRendered} has side effects on the state of ${vm}.${toString$1(key)}`);
+        }
+
+        const reactiveOrAnyValue = reactiveMembrane.getProxy(newValue);
+
+        if (reactiveOrAnyValue !== vm.cmpFields[key]) {
+          vm.cmpFields[key] = reactiveOrAnyValue;
+          componentValueMutated(vm, key);
+        }
+      },
+
+      enumerable: true,
+      configurable: true
+    };
+  }
+
+  function createPublicPropertyDescriptor(key) {
+    return {
+      get() {
+        const vm = getAssociatedVM(this);
+
+        if (isBeingConstructed(vm)) {
+          {
+            logError(`Can’t read the value of property \`${toString$1(key)}\` from the constructor because the owner component hasn’t set the value yet. Instead, use the constructor to set a default value for the property.`, vm);
+          }
+
+          return;
+        }
+
+        componentValueObserved(vm, key);
+        return vm.cmpProps[key];
+      },
+
+      set(newValue) {
+        const vm = getAssociatedVM(this);
+
+        {
+          const vmBeingRendered = getVMBeingRendered();
+          assert.invariant(!isInvokingRender, `${vmBeingRendered}.render() method has side effects on the state of ${vm}.${toString$1(key)}`);
+          assert.invariant(!isUpdatingTemplate, `Updating the template of ${vmBeingRendered} has side effects on the state of ${vm}.${toString$1(key)}`);
+        }
+
+        vm.cmpProps[key] = newValue;
+        componentValueMutated(vm, key);
+      },
+
+      enumerable: true,
+      configurable: true
+    };
+  }
+
+  class AccessorReactiveObserver extends ReactiveObserver {
+    constructor(vm, set) {
+      super(() => {
+        if (isFalse$2(this.debouncing)) {
+          this.debouncing = true;
+          addCallbackToNextTick(() => {
+            if (isTrue$2(this.debouncing)) {
+              const {
+                value
+              } = this;
+              const {
+                isDirty: dirtyStateBeforeSetterCall,
+                component,
+                idx
+              } = vm;
+              set.call(component, value); // de-bouncing after the call to the original setter to prevent
+              // infinity loop if the setter itself is mutating things that
+              // were accessed during the previous invocation.
+
+              this.debouncing = false;
+
+              if (isTrue$2(vm.isDirty) && isFalse$2(dirtyStateBeforeSetterCall) && idx > 0) {
+                // immediate rehydration due to a setter driven mutation, otherwise
+                // the component will get rendered on the second tick, which it is not
+                // desirable.
+                rerenderVM(vm);
+              }
+            }
+          });
+        }
+      });
+      this.debouncing = false;
+    }
+
+    reset(value) {
+      super.reset();
+      this.debouncing = false;
+
+      if (arguments.length > 0) {
+        this.value = value;
+      }
+    }
+
+  }
+
+  function createPublicAccessorDescriptor(key, descriptor) {
+    const {
+      get,
+      set,
+      enumerable,
+      configurable
+    } = descriptor;
+
+    if (!isFunction$1(get)) {
+      {
+        assert.invariant(isFunction$1(get), `Invalid compiler output for public accessor ${toString$1(key)} decorated with @api`);
+      }
+
+      throw new Error();
+    }
+
+    return {
+      get() {
+        {
+          // Assert that the this value is an actual Component with an associated VM.
+          getAssociatedVM(this);
+        }
+
+        return get.call(this);
+      },
+
+      set(newValue) {
+        const vm = getAssociatedVM(this);
+
+        {
+          const vmBeingRendered = getVMBeingRendered();
+          assert.invariant(!isInvokingRender, `${vmBeingRendered}.render() method has side effects on the state of ${vm}.${toString$1(key)}`);
+          assert.invariant(!isUpdatingTemplate, `Updating the template of ${vmBeingRendered} has side effects on the state of ${vm}.${toString$1(key)}`);
+        }
+
+        if (set) {
+          if (runtimeFlags.ENABLE_REACTIVE_SETTER) {
+            let ro = vm.oar[key];
+
+            if (isUndefined$3(ro)) {
+              ro = vm.oar[key] = new AccessorReactiveObserver(vm, set);
+            } // every time we invoke this setter from outside (through this wrapper setter)
+            // we should reset the value and then debounce just in case there is a pending
+            // invocation the next tick that is not longer relevant since the value is changing
+            // from outside.
+
+
+            ro.reset(newValue);
+            ro.observe(() => {
+              set.call(this, newValue);
+            });
+          } else {
+            set.call(this, newValue);
+          }
+        } else {
+          assert.fail(`Invalid attempt to set a new value for property ${toString$1(key)} of ${vm} that does not has a setter decorated with @api.`);
+        }
+      },
+
+      enumerable,
+      configurable
+    };
+  }
+
+  function createObservedFieldPropertyDescriptor(key) {
+    return {
+      get() {
+        const vm = getAssociatedVM(this);
+        componentValueObserved(vm, key);
+        return vm.cmpFields[key];
+      },
+
+      set(newValue) {
+        const vm = getAssociatedVM(this);
+
+        if (newValue !== vm.cmpFields[key]) {
+          vm.cmpFields[key] = newValue;
+          componentValueMutated(vm, key);
+        }
+      },
+
+      enumerable: true,
+      configurable: true
+    };
+  }
   /*
    * Copyright (c) 2018, salesforce.com, inc.
    * All rights reserved.
@@ -2891,7 +3115,213 @@
     PropType[PropType["GetSet"] = 3] = "GetSet";
   })(PropType || (PropType = {}));
 
+  function getClassDescriptorType(descriptor) {
+    if (isFunction$1(descriptor.value)) {
+      return 'method';
+    } else if (isFunction$1(descriptor.set) || isFunction$1(descriptor.get)) {
+      return 'accessor';
+    } else {
+      return 'field';
+    }
+  }
+
+  function validateObservedField(Ctor, fieldName, descriptor) {
+    if (!isUndefined$3(descriptor)) {
+      const type = getClassDescriptorType(descriptor);
+      assert.fail(`Invalid observed ${fieldName} field. Found a duplicate ${type} with the same name.`);
+    }
+  }
+
+  function validateFieldDecoratedWithTrack(Ctor, fieldName, descriptor) {
+    if (!isUndefined$3(descriptor)) {
+      const type = getClassDescriptorType(descriptor);
+      assert.fail(`Invalid @track ${fieldName} field. Found a duplicate ${type} with the same name.`);
+    }
+  }
+
+  function validateFieldDecoratedWithWire(Ctor, fieldName, descriptor) {
+    if (!isUndefined$3(descriptor)) {
+      const type = getClassDescriptorType(descriptor);
+      assert.fail(`Invalid @wire ${fieldName} field. Found a duplicate ${type} with the same name.`);
+    }
+  }
+
+  function validateMethodDecoratedWithWire(Ctor, methodName, descriptor) {
+    if (isUndefined$3(descriptor) || !isFunction$1(descriptor.value) || isFalse$2(descriptor.writable)) {
+      assert.fail(`Invalid @wire ${methodName} method.`);
+    }
+  }
+
+  function validateFieldDecoratedWithApi(Ctor, fieldName, descriptor) {
+    if (!isUndefined$3(descriptor)) {
+      const type = getClassDescriptorType(descriptor);
+      assert.fail(`Invalid @api ${fieldName} field. Found a duplicate ${type} with the same name.`);
+    }
+  }
+
+  function validateAccessorDecoratedWithApi(Ctor, fieldName, descriptor) {
+    if (isUndefined$3(descriptor)) {
+      assert.fail(`Invalid @api get ${fieldName} accessor.`);
+    } else if (isFunction$1(descriptor.set)) {
+      assert.isTrue(isFunction$1(descriptor.get), `Missing getter for property ${fieldName} decorated with @api in ${Ctor}. You cannot have a setter without the corresponding getter.`);
+    } else if (!isFunction$1(descriptor.get)) {
+      assert.fail(`Missing @api get ${fieldName} accessor.`);
+    }
+  }
+
+  function validateMethodDecoratedWithApi(Ctor, methodName, descriptor) {
+    if (isUndefined$3(descriptor) || !isFunction$1(descriptor.value) || isFalse$2(descriptor.writable)) {
+      assert.fail(`Invalid @api ${methodName} method.`);
+    }
+  }
+  /**
+   * INTERNAL: This function can only be invoked by compiled code. The compiler
+   * will prevent this function from being imported by user-land code.
+   */
+
+
+  function registerDecorators(Ctor, meta) {
+    const proto = Ctor.prototype;
+    const {
+      publicProps,
+      publicMethods,
+      wire,
+      track,
+      fields
+    } = meta;
+    const apiMethods = create$2(null);
+    const apiFields = create$2(null);
+    const wiredMethods = create$2(null);
+    const wiredFields = create$2(null);
+    const observedFields = create$2(null);
+    const apiFieldsConfig = create$2(null);
+    let descriptor;
+
+    if (!isUndefined$3(publicProps)) {
+      for (const fieldName in publicProps) {
+        const propConfig = publicProps[fieldName];
+        apiFieldsConfig[fieldName] = propConfig.config;
+        descriptor = getOwnPropertyDescriptor$2(proto, fieldName);
+
+        if (propConfig.config > 0) {
+          // accessor declaration
+          {
+            validateAccessorDecoratedWithApi(Ctor, fieldName, descriptor);
+          }
+
+          if (isUndefined$3(descriptor)) {
+            throw new Error();
+          }
+
+          descriptor = createPublicAccessorDescriptor(fieldName, descriptor);
+        } else {
+          // field declaration
+          {
+            validateFieldDecoratedWithApi(Ctor, fieldName, descriptor);
+          }
+
+          descriptor = createPublicPropertyDescriptor(fieldName);
+        }
+
+        apiFields[fieldName] = descriptor;
+        defineProperty$1(proto, fieldName, descriptor);
+      }
+    }
+
+    if (!isUndefined$3(publicMethods)) {
+      forEach.call(publicMethods, methodName => {
+        descriptor = getOwnPropertyDescriptor$2(proto, methodName);
+
+        {
+          validateMethodDecoratedWithApi(Ctor, methodName, descriptor);
+        }
+
+        if (isUndefined$3(descriptor)) {
+          throw new Error();
+        }
+
+        apiMethods[methodName] = descriptor;
+      });
+    }
+
+    if (!isUndefined$3(wire)) {
+      for (const fieldOrMethodName in wire) {
+        const {
+          adapter,
+          method,
+          config: configCallback,
+          dynamic = []
+        } = wire[fieldOrMethodName];
+        descriptor = getOwnPropertyDescriptor$2(proto, fieldOrMethodName);
+
+        if (method === 1) {
+          {
+            assert.isTrue(adapter, `@wire on method "${fieldOrMethodName}": adapter id must be truthy.`);
+            validateMethodDecoratedWithWire(Ctor, fieldOrMethodName, descriptor);
+          }
+
+          if (isUndefined$3(descriptor)) {
+            throw new Error();
+          }
+
+          wiredMethods[fieldOrMethodName] = descriptor;
+          storeWiredMethodMeta(descriptor, adapter, configCallback, dynamic);
+        } else {
+          {
+            assert.isTrue(adapter, `@wire on field "${fieldOrMethodName}": adapter id must be truthy.`);
+            validateFieldDecoratedWithWire(Ctor, fieldOrMethodName, descriptor);
+          }
+
+          descriptor = internalWireFieldDecorator(fieldOrMethodName);
+          wiredFields[fieldOrMethodName] = descriptor;
+          storeWiredFieldMeta(descriptor, adapter, configCallback, dynamic);
+          defineProperty$1(proto, fieldOrMethodName, descriptor);
+        }
+      }
+    }
+
+    if (!isUndefined$3(track)) {
+      for (const fieldName in track) {
+        descriptor = getOwnPropertyDescriptor$2(proto, fieldName);
+
+        {
+          validateFieldDecoratedWithTrack(Ctor, fieldName, descriptor);
+        }
+
+        descriptor = internalTrackDecorator(fieldName);
+        defineProperty$1(proto, fieldName, descriptor);
+      }
+    }
+
+    if (!isUndefined$3(fields)) {
+      for (let i = 0, n = fields.length; i < n; i++) {
+        const fieldName = fields[i];
+        descriptor = getOwnPropertyDescriptor$2(proto, fieldName);
+
+        {
+          validateObservedField(Ctor, fieldName, descriptor);
+        }
+
+        observedFields[fieldName] = createObservedFieldPropertyDescriptor(fieldName);
+      }
+    }
+
+    setDecoratorsMeta(Ctor, {
+      apiMethods,
+      apiFields,
+      apiFieldsConfig,
+      wiredMethods,
+      wiredFields,
+      observedFields
+    });
+    return Ctor;
+  }
+
   const signedDecoratorToMetaMap = new Map();
+
+  function setDecoratorsMeta(Ctor, meta) {
+    signedDecoratorToMetaMap.set(Ctor, meta);
+  }
 
   const defaultMeta = {
     apiMethods: EmptyObject,
@@ -6672,6 +7102,36 @@
     return AdapterToTokenMap.get(adapter);
   }
 
+  function storeWiredMethodMeta(descriptor, adapter, configCallback, dynamic) {
+    // support for callable adapters
+    if (adapter.adapter) {
+      adapter = adapter.adapter;
+    }
+
+    const method = descriptor.value;
+    const def = {
+      adapter,
+      method,
+      configCallback,
+      dynamic
+    };
+    WireMetaMap.set(descriptor, def);
+  }
+
+  function storeWiredFieldMeta(descriptor, adapter, configCallback, dynamic) {
+    // support for callable adapters
+    if (adapter.adapter) {
+      adapter = adapter.adapter;
+    }
+
+    const def = {
+      adapter,
+      configCallback,
+      dynamic
+    };
+    WireMetaMap.set(descriptor, def);
+  }
+
   function installWireAdapters(vm) {
     const {
       context,
@@ -7138,17 +7598,17 @@
   seal$2(LightningElement.prototype);
   /* version: 2.2.5 */
 
-  function stylesheet$2(hostSelector, shadowSelector, nativeShadow) {
+  function stylesheet$4(hostSelector, shadowSelector, nativeShadow) {
     return [".main-presentation", shadowSelector, " {flex: 11 0 91%;position: relative;max-width: 91%;}.main-navigation", shadowSelector, " {flex: 1 0 8.3%;position: relative;}.main", shadowSelector, " {height: 100%;max-height: 100%;max-width: 100%;overflow: hidden;display: flex;flex-flow: row wrap;background-color: var(--flat-white);}.main-title", shadowSelector, " {display: flex;align-items: center;height: 5rem;padding: 2rem;font-family: var(--title-font-family);text-align: center;color: var(--light-text-content);width: 100%;min-width: 0;}.main-title", shadowSelector, " > div", shadowSelector, " {display: flex;align-items: center;justify-content: center;min-height: 2rem;min-height: 2rem;cursor: pointer;width: 4rem;}.main-title__gap", shadowSelector, " {margin: auto;min-width: 0;}.main-button__context", shadowSelector, " {border-radius: 50%;max-height: 4rem;display: flex;align-items: center;padding: 0.5rem;cursor: pointer;box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);}.main-container", shadowSelector, " {font-family: var(--content-font-family);color: var(--main-content-color-light);overflow: auto;display: flex;flex-flow: row wrap;position: relative;height: 100%;max-height: 100%;}.main-content__home", shadowSelector, " {scroll-behavior: smooth;height: 100%;overflow-y: scroll;}.main-container__sidebar", shadowSelector, " {flex: 1.5 0 0;margin-right: 1rem;animation: var(--animation-fade-in) 1s;position: relative;display: flex;flex-flow: column wrap;}.sidebar__top", shadowSelector, " {flex: 8 0 0;}.sidebar__bottom", shadowSelector, " {flex: 2 0 0;display: flex;flex-flow: row wrap;}", shadowSelector, "::-webkit-scrollbar {display: none;}.main-container__content", shadowSelector, " {scrollbar-width: none;position: relative;padding: 2rem;overflow: scroll;flex: 6 0 0;height: 90%;max-height: 90%;}.colective-mention", shadowSelector, " {color: var(--main-sidebar-color-pink);}.main-container__leftover", shadowSelector, " {flex: 1;margin-left: 1rem;}.main-header", shadowSelector, " {display: flex;min-height: 5rem;position: sticky;flex-flow: row nowrap;top: 0;z-index: 10;}.colective-bold", shadowSelector, " {color: var(--light-blue);}.container__vertical", shadowSelector, " {position: relative;display: flex;flex-direction: column;min-height: 100%;height: 100%;}"].join('');
   }
-  var _implicitStylesheets$2 = [stylesheet$2];
+  var _implicitStylesheets$4 = [stylesheet$4];
 
-  function stylesheet$1(hostSelector, shadowSelector, nativeShadow) {
+  function stylesheet$3(hostSelector, shadowSelector, nativeShadow) {
     return ["@keyframes fadeIn {from {opacity: 0;}to {opacity: 1;}}.main-header__logo", shadowSelector, " {flex: 2 0 0;display: flex;align-items: center;justify-content: center;margin: 5px;animation: var(--animation-fade-in) var(--fade-in-duration);}.logo__text", shadowSelector, " {font: var(--text-logo);color: var(--light-headers);letter-spacing: 2px;}.main-header__gap", shadowSelector, " {flex: 10 0 0;}"].join('');
   }
-  var _implicitStylesheets$1 = [stylesheet$1];
+  var _implicitStylesheets$3 = [stylesheet$3];
 
-  function tmpl$2($api, $cmp, $slotset, $ctx) {
+  function tmpl$4($api, $cmp, $slotset, $ctx) {
     const {t: api_text, h: api_element} = $api;
     return [api_element("div", {
       classMap: {
@@ -7167,14 +7627,14 @@
       key: 2
     }, [])];
   }
-  var _tmpl$2 = registerTemplate(tmpl$2);
-  tmpl$2.stylesheets = [];
+  var _tmpl$4 = registerTemplate(tmpl$4);
+  tmpl$4.stylesheets = [];
 
 
-  if (_implicitStylesheets$1) {
-    tmpl$2.stylesheets.push.apply(tmpl$2.stylesheets, _implicitStylesheets$1);
+  if (_implicitStylesheets$3) {
+    tmpl$4.stylesheets.push.apply(tmpl$4.stylesheets, _implicitStylesheets$3);
   }
-  tmpl$2.stylesheetTokens = {
+  tmpl$4.stylesheetTokens = {
     hostAttribute: "wired-header_header-host",
     shadowAttribute: "wired-header_header"
   };
@@ -7187,11 +7647,181 @@
   }
 
   var _wiredHeader = registerComponent(Header, {
+    tmpl: _tmpl$4
+  });
+
+  function stylesheet$2(hostSelector, shadowSelector, nativeShadow) {
+    return ["section-marks", shadowSelector, " {flex: 1 0 0;display: flex;flex-flow: row nowrap;}.section-boxes", shadowSelector, " {flex: 1 0 0;display: flex;flex-flow: column wrap;justify-content: flex-end;}.section-boxes__gap", shadowSelector, " {flex: 1 0 0;}"].join('');
+  }
+  var _implicitStylesheets$2 = [stylesheet$2];
+
+  function stylesheet$1(hostSelector, shadowSelector, nativeShadow) {
+    return [".section-mark", shadowSelector, " {flex: 0 0 16%;display: flex;align-items: center;justify-content: center;padding: 1rem 0 1rem 0;}.mark__box", shadowSelector, " {width: 1rem;height: 1rem;box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);background-color: var(--flat-gray);cursor: pointer;}.mark__title", shadowSelector, " {margin-left: 1rem;max-width: 2rem;opacity: 0;}.flatYellow", shadowSelector, " {background-color: var(--flat-yellow);}.flatRed", shadowSelector, " {background-color: var(--flat-red);}.flatBlue", shadowSelector, " {background-color: var(--flat-blue);}.flatOrange", shadowSelector, " {background-color: var(--flat-orange);}.flatGreen", shadowSelector, " {background-color: var(--flat-green);background-color: var(--flat-green);}.glitched", shadowSelector, " {opacity: 1;animation: glitch 0.5s linear forwards 2;}@keyframes glitch {25% {transform: translate(2px, 0);}75% {transform: translate(-2px, 0);}}.glitched", shadowSelector, ":before,.glitched", shadowSelector, ":after {display: inline;content: attr(title);position: absolute;left: 0;letter-spacing: -1px;}.glitched", shadowSelector, ":before {animation: glitchTop 0.5s linear 2;clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);-webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);}@keyframes glitchTop {2%,\t64% {transform: translate(2px, -2px);}4%,\t60% {transform: translate(-2px, 2px);}62% {transform: translate(10px, -1px) skew(-13deg);}}.glitched", shadowSelector, ":after {animation: glitchBotom 0.5s linear 2;clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);-webkit-clip-path: polygon(\n\t\t0 67%,\n\t\t100% 67%,\n\t\t100% 100%,\n\t\t0 100%\n\t);}@keyframes glitchBotom {2%,\t64% {transform: translate(-4px, 0);}4%,\t60% {transform: translate(-4px, 0);}62% {transform: translate(-19px, 122px) skew(21deg);}}"].join('');
+  }
+  var _implicitStylesheets$1 = [stylesheet$1];
+
+  function tmpl$3($api, $cmp, $slotset, $ctx) {
+    const {h: api_element, d: api_dynamic} = $api;
+    return [api_element("div", {
+      classMap: {
+        "section-mark": true
+      },
+      key: 0
+    }, [api_element("div", {
+      className: $cmp.state.boxClass,
+      key: 1
+    }, []), api_element("div", {
+      classMap: {
+        "mark__title": true
+      },
+      attrs: {
+        "title": $cmp.title
+      },
+      key: 2
+    }, [api_dynamic($cmp.state.title)])])];
+  }
+  var _tmpl$3 = registerTemplate(tmpl$3);
+  tmpl$3.stylesheets = [];
+
+
+  if (_implicitStylesheets$1) {
+    tmpl$3.stylesheets.push.apply(tmpl$3.stylesheets, _implicitStylesheets$1);
+  }
+  tmpl$3.stylesheetTokens = {
+    hostAttribute: "wired-sectionMark_sectionMark-host",
+    shadowAttribute: "wired-sectionMark_sectionMark"
+  };
+
+  class SectionMark extends LightningElement {
+    constructor(...args) {
+      super(...args);
+      this.state = {};
+    }
+
+    get title() {
+      return this.state.title;
+    }
+
+    set title(title) {
+      this.state.title = title;
+    }
+
+    get backgroundColor() {
+      return this.state.boxClass;
+    }
+
+    set backgroundColor(backgroundColor) {
+      this.state.boxClass = 'mark__box ' + backgroundColor;
+    }
+
+  }
+
+  registerDecorators(SectionMark, {
+    publicProps: {
+      title: {
+        config: 3
+      },
+      backgroundColor: {
+        config: 3
+      }
+    },
+    track: {
+      state: 1
+    }
+  });
+
+  var _wiredSectionMark = registerComponent(SectionMark, {
+    tmpl: _tmpl$3
+  });
+
+  function tmpl$2($api, $cmp, $slotset, $ctx) {
+    const {k: api_key, c: api_custom_element, i: api_iterator, h: api_element} = $api;
+    return [api_element("div", {
+      classMap: {
+        "section-boxes": true
+      },
+      key: 0
+    }, api_iterator($cmp.sections, function (section) {
+      return api_custom_element("wired-section-mark", _wiredSectionMark, {
+        props: {
+          "title": section.title,
+          "backgroundColor": section.backgroundColor
+        },
+        key: api_key(1, section.title)
+      }, []);
+    })), api_element("div", {
+      classMap: {
+        "section-boxes__gap": true
+      },
+      key: 2
+    }, [])];
+  }
+  var _tmpl$2 = registerTemplate(tmpl$2);
+  tmpl$2.stylesheets = [];
+
+
+  if (_implicitStylesheets$2) {
+    tmpl$2.stylesheets.push.apply(tmpl$2.stylesheets, _implicitStylesheets$2);
+  }
+  tmpl$2.stylesheetTokens = {
+    hostAttribute: "wired-sectionMarks_sectionMarks-host",
+    shadowAttribute: "wired-sectionMarks_sectionMarks"
+  };
+
+  class SectionMarks extends LightningElement {
+    constructor(...args) {
+      super(...args);
+      this.sections = [{
+        title: 'inicio',
+        backgroundColor: 'flatGray',
+        pathlink: 'home',
+        animationBackground: '--flat-white',
+        animationContrast: '--flat-black'
+      }, {
+        title: 'proyectos',
+        backgroundColor: 'flatYellow',
+        pathlink: 'projects',
+        animationBackground: '--flat-yellow',
+        animationContrast: '--flat-white'
+      }, {
+        title: 'blog',
+        backgroundColor: 'flatBlue',
+        pathlink: 'blog',
+        animationBackground: '--flat-blue',
+        animationContrast: '--flat-white'
+      }, {
+        title: 'feeds',
+        backgroundColor: 'flatRed',
+        pathlink: 'feeds',
+        animationBackground: '--flat-red',
+        animationContrast: '--flat-white'
+      }, {
+        title: 'nosotros',
+        backgroundColor: 'flatOrange',
+        pathlink: 'hackers',
+        animationBackground: '--flat-orange',
+        animationContrast: '--flat-white'
+      }, {
+        title: 'contacto',
+        backgroundColor: 'flatGreen',
+        pathlink: 'contact',
+        animationBackground: '--flat-green',
+        animationContrast: '--flat-white'
+      }];
+    }
+
+  }
+
+  registerDecorators(SectionMarks, {
+    fields: ["sections"]
+  });
+
+  var _wiredSectionMarks = registerComponent(SectionMarks, {
     tmpl: _tmpl$2
   });
 
   function stylesheet(hostSelector, shadowSelector, nativeShadow) {
-    return ["@keyframes fadeIn {from {opacity: 0;}to {opacity: 1;}}.home-text__presentation", shadowSelector, " {padding: 5rem;text-align: justify;animation: var(--animation-fade-in) var(--fade-in-duration);font-size: 3.5vh;height: 95%;}"].join('');
+    return ["@keyframes fadeIn {from {opacity: 0;}to {opacity: 1;}}.home-text__presentation", shadowSelector, " {padding: 5rem;text-align: justify;animation: var(--animation-fade-in) var(--fade-in-duration);font-size: 1.5rem;height: 95%;}"].join('');
   }
   var _implicitStylesheets = [stylesheet];
 
@@ -7262,34 +7892,36 @@
         "sclassebar__bottom": true
       },
       key: 6
-    }, [])]), api_element("div", {
+    }, [api_custom_element("wired-section-marks", _wiredSectionMarks, {
+      key: 7
+    }, [])])]), api_element("div", {
       classMap: {
         "main-container__content": true
       },
-      key: 7
+      key: 8
     }, [api_custom_element("wired-home", _wiredHome, {
       classMap: {
         "main-content__home": true
       },
-      key: 8
+      key: 9
     }, [])]), api_element("div", {
       classMap: {
         "main-container__leftover": true
       },
-      key: 9
+      key: 10
     }, [])])]), api_element("div", {
       classMap: {
         "main-navigation": true
       },
-      key: 10
+      key: 11
     }, [])])];
   }
   var _tmpl = registerTemplate(tmpl);
   tmpl.stylesheets = [];
 
 
-  if (_implicitStylesheets$2) {
-    tmpl.stylesheets.push.apply(tmpl.stylesheets, _implicitStylesheets$2);
+  if (_implicitStylesheets$4) {
+    tmpl.stylesheets.push.apply(tmpl.stylesheets, _implicitStylesheets$4);
   }
   tmpl.stylesheetTokens = {
     hostAttribute: "wired-app_app-host",

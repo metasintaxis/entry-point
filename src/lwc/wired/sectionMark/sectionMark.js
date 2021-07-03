@@ -1,5 +1,21 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 export default class SectionMark extends LightningElement {
-	@api title;
+	@track state = {};
+	@api get title() {
+		return this.state.title;
+	}
+
+	set title (title) {
+		this.state.title = title;
+	}
+
+	@api
+	get backgroundColor() {
+		return this.state.boxClass;
+	}
+
+	set backgroundColor(backgroundColor) {
+		this.state.boxClass = 'mark__box ' + backgroundColor;
+	}
 }

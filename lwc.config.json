@@ -1,7 +1,7 @@
 {
     "modules": [
         {
-            "dir": "src/client/modules/wired"
+            "dir": "src/lwc/"
         }
     ]
 }
