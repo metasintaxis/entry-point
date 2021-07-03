@@ -1,4 +1,4 @@
-tile-item {
+:host {
 	flex: 0 0 16.6%;
 	writing-mode: vertical-lr;
 	cursor: pointer;

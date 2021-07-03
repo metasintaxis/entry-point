@@ -16,6 +16,6 @@ export default class Mark extends LightningElement {
 	}
 
 	set backgroundColor(backgroundColor) {
-		this.state.boxClass = 'mark__box ' + backgroundColor;
+		this.state.boxClass = 'item-title ' + backgroundColor;
 	}
 }
