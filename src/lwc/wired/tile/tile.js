@@ -9,7 +9,7 @@ export default class Tile extends LightningElement {
 	}
 
 	set backgroundColor(backgroundColor) {
-		this.state.tileClass = 'mark__box ' + backgroundColor;
+		this.state.tileClass = 'item-title ' + backgroundColor;
 	}
 
 	@api get title() {

@@ -1,0 +1,22 @@
+.navigation-tiles {
+	height: 100%;
+	display: flex;
+	flex-direction: row nowrap;
+	justify-content: flex-end;
+}
+
+
+wired-tile {
+	flex: 0 0 16.6%;
+	writing-mode: vertical-lr;
+	cursor: pointer;
+	font-family: var(--content-font-family);
+	color: var(--flat-white);
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
