@@ -27,3 +27,7 @@
 .flatGreen {
 	background-color: var(--flat-green);
 }
+
+.flatGray {
+	background-color: var(--flat-gray);
+}
