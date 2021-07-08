@@ -1,6 +1,11 @@
-.section-boxes {
-	flex: 1 0 0;
-	display: flex;
-	flex-flow: column wrap;
-	justify-content: flex-end;
+@import 'wired/flex';
+@import 'wired/slds';
+
+wired-mark {
+	width: 100%;
+	flex: 0 0 16%;
+}
+
+.mark-list {
+	width: 100%;
 }

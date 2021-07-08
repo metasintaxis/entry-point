@@ -30,19 +30,5 @@ export default class MarkList extends LightningElement {
 			animationBackground: '--flat-red',
 			animationContrast: '--flat-white'
 		},
-		{
-			title: 'nosotros',
-			backgroundColor: 'flatOrange',
-			pathlink: 'hackers',
-			animationBackground: '--flat-orange',
-			animationContrast: '--flat-white'
-		},
-		{
-			title: 'contacto',
-			backgroundColor: 'flatGreen',
-			pathlink: 'contact',
-			animationBackground: '--flat-green',
-			animationContrast: '--flat-white'
-		}
 	];
 }

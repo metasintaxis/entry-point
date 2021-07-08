@@ -1,8 +1,8 @@
-.wired-flex-container {
+.wired-container {
 	display: flex;
 }
 
-.wired-flex-vertical-grid {
+.wired-vertical-grid {
 	flex-flow: column nowrap;
 	min-height: 100%;
 }
@@ -21,4 +21,9 @@
 
 .wired-vertical-center {
 	align-items: center;
+}
+
+.wired-grid_aling-end {
+	justify-content: flex-end;
+
 }

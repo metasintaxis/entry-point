@@ -1,7 +1,7 @@
+@import 'wired/flex';
+@import 'wired/slds';
+
 .section-mark {
-	flex: 0 0 16%;
-	display: flex;
-	align-items: center;
 	padding: 1rem 0 1rem 0;
 	width: 100%;
 }

@@ -1,7 +1,8 @@
 <template>
-	<div class="section-boxes">
+	<div class="mark-list wired-container wired-vertical-grid wired-grid_aling-end">
 		<template for:each={sections} for:item="section">
 			<wired-mark
+				class="wired-container"
 				key={section.title}
 				title={section.title}
 				background-color={section.backgroundColor}
