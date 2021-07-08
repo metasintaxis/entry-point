@@ -1,0 +1,24 @@
+.wired-flex-container {
+	display: flex;
+}
+
+.wired-flex-vertical-grid {
+	flex-flow: column nowrap;
+	min-height: 100%;
+}
+
+.wired-size_1-of-8 {
+	flex: 1 0 0;
+}
+
+.wired-size_4-of-8 {
+	flex: 4 0 0;
+}
+
+.wired-size_3-of-8 {
+	flex: 3 0 0;
+}
+
+.wired-vertical-center {
+	align-items: center;
+}
