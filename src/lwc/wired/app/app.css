@@ -22,7 +22,7 @@ wired-mark-list {
 	inset: 0;
 
 	position: fixed;
-	background-color: var(--flat-white);
+	/* background-color: var(--flat-white); */
 }
 
 .main-title {
