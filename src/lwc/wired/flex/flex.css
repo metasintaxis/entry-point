@@ -2,8 +2,17 @@
 	display: flex;
 }
 
+.wired-vertical-align-center {
+	align-items: center;
+}
+
 .wired-vertical-grid {
 	flex-flow: column nowrap;
+	min-height: 100%;
+}
+
+.wired-vertical-grid_reversed {
+	flex-flow: column-reverse nowrap;
 	min-height: 100%;
 }
 
@@ -25,5 +34,4 @@
 
 .wired-grid_aling-end {
 	justify-content: flex-end;
-
 }
