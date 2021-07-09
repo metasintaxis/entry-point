@@ -80,7 +80,7 @@ wired-mark-list {
 }
 
 wired-sidebar {
-	padding: .5rem;
+	padding: 0.5rem;
 	animation: var(--animation-fade-in) 1s;
 	position: relative;
 	min-height: 100%;

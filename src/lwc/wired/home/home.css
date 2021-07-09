@@ -9,7 +9,6 @@
 	}
 }
 
-
 .home-text__presentation {
 	text-align: center;
 	color: var(--flat-gray);
@@ -24,5 +23,4 @@
 p {
 	flex: 1 0 0;
 	text-align: center;
-
 }
