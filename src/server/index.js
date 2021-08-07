@@ -9,7 +9,8 @@ app.set('port', process.env.PORT || port);
 
 app.use('/app', express.static(path.join(__dirname, '../../client/')));
 app.use('/app/*', express.static(path.join(__dirname, '../../client/')));
-app.get('/', (request, response) => {
+
+app.get('/*', (request, response) => {
 	response.redirect('/app');
 });
 

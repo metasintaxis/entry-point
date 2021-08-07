@@ -1,10 +1,21 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 export default class Home extends LightningElement {
-	textPlaceholder = 'the humble crm programmer';
-	welcomeText = '';
+	@track state = {};
+	@api section;
+
 	iterator = 0;
 	speed = 60;
+
+	constructor() {
+		super();
+		this.init();
+	}
+
+	init = () => {
+		this.state.textPlaceholder = 'the humble crm programmer';
+		this.state.welcomeText = '';
+	};
 
 	typeWriter = () => {
 		setTimeout(() => {
@@ -19,11 +30,17 @@ export default class Home extends LightningElement {
 	}
 
 	charactersRemaining = () => {
-		return this.iterator < this.textPlaceholder.length;
+		return this.iterator < this.state.textPlaceholder.length;
 	};
 
 	addNextCharacter = () => {
-		this.welcomeText += this.textPlaceholder[this.iterator];
+		const welcomeText =
+			this.state.welcomeText + this.state.textPlaceholder[this.iterator];
+		this.setStateProperty('welcomeText', welcomeText);
 		this.iterator++;
+	};
+
+	setStateProperty = (prop, value) => {
+		this.state[prop] = value;
 	};
 }

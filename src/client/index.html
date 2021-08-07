@@ -15,6 +15,39 @@
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 		/>
 
+		<script>
+			// It's imperative to have this script inside of the
+			// index.html file. Otherwise, the static server could
+			// not resolve the url for external folders.
+			const rootPaths = ['/app/', '/', '/app'];
+
+			const resolveRootUrl = () => {
+				if (!rootPaths.includes(window.location.pathname)) {
+					// Set up /app/ as the original pathname
+					// and briefly store the state inside
+					// the browser to avoid losing it
+					window.localStorage.setItem(
+						window.location.host + 'originalLocation',
+						JSON.stringify(window.location)
+					);
+					window.location.assign('/app/');
+				} else {
+					// This code runs after the url is
+					// properly handled for the first time
+					window.__originalLocation = JSON.parse(
+						window.localStorage.getItem(
+							window.location.host + 'originalLocation'
+						)
+					);
+					window.localStorage.removeItem(
+						window.location.host + 'originalLocation'
+					);
+				}
+			};
+
+			resolveRootUrl();
+		</script>
+
 		<script type="module" src="dist/index.js"></script>
 
 		<style>

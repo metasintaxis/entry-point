@@ -1,7 +1,13 @@
 <template>
 	<section>
-		<wired-home
-			class="slds-p-right_xx-large slds-p-bottom_xx-large"
-		></wired-home>
+		<template if:true={state.home}>
+			<wired-home
+				class="slds-p-right_xx-large slds-p-bottom_xx-large"
+				section={state.homeSection}
+			></wired-home>
+		</template>
+		<template if:true={state.sitio}>
+			<wired-sitio></wired-sitio>
+		</template>
 	</section>
 </template>

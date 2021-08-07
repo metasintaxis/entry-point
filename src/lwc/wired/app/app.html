@@ -2,12 +2,16 @@
 	<main class="main slds-grid">
 		<wired-sidebar
 			class="slds-size_1-of-8"
-			sections={sections}
+			sections={state.previousSections}
 		></wired-sidebar>
-		<wired-content class="slds-size_6-of-8"></wired-content>
+		<wired-content
+			class="slds-size_6-of-8"
+			sections={state.sections}
+			handle-segment-assignment={handleSegmentAssignment}
+		></wired-content>
 		<wired-navigation
 			class="slds-size_1-of-8"
-			sections={sections}
+			sections={state.nextSections}
 		></wired-navigation>
 	</main>
 </template>
