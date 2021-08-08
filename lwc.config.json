@@ -1,7 +1,8 @@
 {
-    "modules": [
-        {
-            "dir": "src/lwc/"
-        }
-    ]
+	"modules": [
+		{
+			"dir": "src/lwc/"
+		},
+		{ "npm": "@lwce/router" }
+	]
 }
