@@ -29,6 +29,7 @@
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
+    "@lwc/engine-dom": "^2.3.0",
     "@lwce/router": "^1.0.0",
     "express": "^4.17.1",
     "lwc": "^1.7.2"

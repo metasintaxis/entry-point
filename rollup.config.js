@@ -5,9 +5,6 @@ import resolve from '@rollup/plugin-node-resolve';
 
 const dev = process.env.NODE_ENV !== 'production';
 
-// const outputDir = path.resolve(__dirname, `./src/dist`);
-// const input = path.resolve(__dirname, './src/index.js');
-
 export default [
 	{
 		input: 'src/lwc/main.js',
@@ -26,6 +23,8 @@ export default [
 						return require('lwc').getModulePath('wire-service');
 					} else if (id === '@lwc/synthetic-shadow') {
 						return require('lwc').getModulePath('synthetic-shadow');
+					} else if (id === '@lwc/engine-dom') {
+						return require('lwc').getModulePath('engine-dom');
 					}
 				}
 			},
