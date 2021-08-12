@@ -3,6 +3,8 @@
 		{
 			"dir": "src/lwc/"
 		},
-		{ "npm": "@lwce/router" }
+		{
+			"npm": "@lwce/router"
+		}
 	]
 }

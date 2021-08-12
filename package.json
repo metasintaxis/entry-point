@@ -16,17 +16,21 @@
   "author": "AlbertoMata",
   "license": "ISC",
   "devDependencies": {
+    "@lwc/compiler": "^1.7.2",
+    "@lwc/engine": "^1.7.2",
     "@lwc/rollup-plugin": "^2.2.5",
+    "@lwc/synthetic-shadow": "^1.7.2",
+    "@lwc/wire-service": "^1.7.2",
+    "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-replace": "^2.4.2",
     "@rollup/plugin-run": "^2.0.2",
     "eslint": "^7.30.0",
-    "lwc": "^1.18.0",
     "rollup": "^2.52.6",
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
-    "@lwc/engine-dom": "^2.3.0",
     "@lwce/router": "^1.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "lwc": "^1.7.2"
   }
 }
