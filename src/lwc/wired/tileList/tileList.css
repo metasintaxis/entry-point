@@ -5,6 +5,10 @@
 	justify-content: flex-end;
 }
 
+.link {
+	display: flex;
+}
+
 wired-tile {
 	flex: 0 0 16.6%;
 	writing-mode: vertical-lr;
