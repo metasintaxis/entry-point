@@ -1,8 +1,8 @@
 import lwc from '@lwc/rollup-plugin';
 import replace from '@rollup/plugin-replace';
 import run from '@rollup/plugin-run';
-import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
+import path from 'path';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -31,12 +31,8 @@ const resolveLWCModules = {
 			return require('lwc').getModulePath('synthetic-shadow');
 		} else if (id === '@lwc/engine-dom') {
 			return require('lwc').getModulePath('engine-dom');
-		} else if (id === '@lwc/router') {
-			return require('@lwce/router').getModulePath('router');
 		}
-	},
-
-
+	}
 };
 
 const lwcConfig = {

@@ -1,13 +1,16 @@
 <template>
-	<section>
-		<template if:true={state.home}>
-			<wired-home
-				class="slds-p-right_xx-large slds-p-bottom_xx-large"
-				section={state.homeSection}
-			></wired-home>
-		</template>
-		<template if:true={state.sitio}>
-			<wired-sitio></wired-sitio>
-		</template>
-	</section>
+	<main class="main slds-grid">
+		<wired-sidebar
+			class="slds-size_1-of-8"
+			sections={state.sections}
+		></wired-sidebar>
+		<wired-viewport
+			class="slds-size_6-of-8"
+			sections={state.sections}
+		></wired-viewport>
+		<wired-navigation
+			class="slds-size_1-of-8"
+			sections={state.sections}
+		></wired-navigation>
+	</main>
 </template>
