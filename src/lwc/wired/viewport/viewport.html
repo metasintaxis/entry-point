@@ -1,7 +1,8 @@
 <template>
 	<section>
 		<!-- To find out why isn't possible to replace this template by a slot wrapper -->
-		<template name="router-helper" if:true={state.isRouterVisible}>
+		<!-- <template name="router-helper" if:true={state.isRouterVisible}> -->
+		<helper-view>
 			<lwce-router>
 				<lwce-route path="/app/home">
 					<wired-home
@@ -13,7 +14,8 @@
 					<wired-sitio></wired-sitio>
 				</lwce-route>
 			</lwce-router>
-		</template>
+		</helper-view>
+		<!-- </template> -->
 		<div onclick={handlefoo}>foo</div>
 		<div onclick={handlebar}>bar</div>
 	</section>

@@ -1,5 +1,7 @@
 <template>
-	<template if:true={state.isVisible} >
-		<slot onslotchange={handleSlotChange}></slot>
+	<template if:true={state.isVisible}>
+		<lwce-router>
+			<slot></slot>
+		</lwce-router>
 	</template>
 </template>

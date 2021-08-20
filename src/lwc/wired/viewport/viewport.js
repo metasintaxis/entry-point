@@ -1,5 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
-import { history } from 'helper/history';
+// import { history } from 'helper/history';
 import { setState } from 'service/stateManager';
 
 const routerVisibilityProperty = 'isRouterVisible';
@@ -21,14 +21,16 @@ export default class Viewport extends LightningElement {
 
 	init = () => {
 		this.state[routerVisibilityProperty] = true;
-		this.history = history;
+		// this.history = history;
 	};
 
 	handlefoo = () => {
-		this.history.pushState(this, routerVisibilityProperty, '/app/sitio/');
+		// this.history.pushState(this, routerVisibilityProperty, '/app/sitio/');
+		this.template.querySelector('helper-view').push('/app/sitio/');
 	};
 
 	handlebar = () => {
-		this.history.pushState(this, routerVisibilityProperty, '/app/home/');
+		this.template.querySelector('helper-view').push('/app/home/');
+		// this.history.pushState(this, routerVisibilityProperty, '/app/home/');
 	};
 }
