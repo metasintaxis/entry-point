@@ -1,18 +1,20 @@
 <template>
 	<section>
-		<lwce-router>
-			<lwce-route path="/app/home">
-				<wired-home
-					class="slds-p-right_xx-large slds-p-bottom_xx-large"
-					section={state.homeSection}
-				></wired-home>
-			</lwce-route>
-			<lwce-route path="/app/sitio">
-				<wired-sitio></wired-sitio>
-			</lwce-route>
-			<lwce-link class="foo" title="bar" href="/app/sitio" > sitio</lwce-link>
-		</lwce-router>
-		<div onclick={handlefoo} >foo</div>
-		<div onclick={handlebar} >bar</div>
+		<!-- To find out why isn't possible to replace this template by a slot wrapper -->
+		<template name="router-helper" if:true={state.isRouterVisible}>
+			<lwce-router>
+				<lwce-route path="/app/home">
+					<wired-home
+						class="slds-p-right_xx-large slds-p-bottom_xx-large"
+						section={state.homeSection}
+					></wired-home>
+				</lwce-route>
+				<lwce-route path="/app/sitio">
+					<wired-sitio></wired-sitio>
+				</lwce-route>
+			</lwce-router>
+		</template>
+		<div onclick={handlefoo}>foo</div>
+		<div onclick={handlebar}>bar</div>
 	</section>
 </template>

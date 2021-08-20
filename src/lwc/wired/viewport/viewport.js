@@ -1,38 +1,39 @@
 import { LightningElement, track, api } from 'lwc';
+import { history } from 'helper/history';
+import { setState } from 'service/stateManager';
+
+const isRouterVisible = 'isRouterVisible';
 
 export default class Viewport extends LightningElement {
+	@api sections;
 	@track state = {};
 
-	@api sections;
-
-	connectedCallback() {
+	constructor() {
+		super();
 		this.init();
 	}
 
-	init = () => {
+	connectedCallback() {
 		const sections = this.sections;
-		this.state.sections = sections;
-		this.state.homeSection = sections[0];
+		setState(this, 'sections', sections);
+		setState(this, 'homeSection', sections[0]);
+	}
+
+	init = () => {
 		this.state.flag = true;
+		this.state[isRouterVisible] = true;
+		this.history = history;
+	};
+
+	handleUrlChange = () => {
+		console.log('urlchange');
 	};
 
 	handlefoo = () => {
-		// history.pushState({},'','localhost:5000/app/home/');
-		if (this.state.flag) {
-			this.state.flag = !this.state.flag;
-		}
+		this.history.pushState(this, isRouterVisible, '/app/sitio/');
 	};
-
 
 	handlebar = () => {
-		if (this.state.flag) {
-			this.state.flag = !this.state.flag;
-		}
-		const link = this.template.querySelector('lwce-link[class="foo"]');
-		console.log(link);
-		console.log( typeof link);
-		link.click();
-		// history.pushState({},'','http://localhost:5000/app/sitio/');
+		this.history.pushState(this, isRouterVisible, '/app/home/');
 	};
-
 }
