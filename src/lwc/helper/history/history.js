@@ -22,12 +22,10 @@ class historyObject {
 	};
 
 	pushState = (reference, property, path) => {
-		const newValue = false;
-		setState(reference, property, newValue);
-		this.asyncPush(reference, property, path)
+		setState(reference, property, false);
+		this.asyncPush(path)
 			.then((message) => {
-				const newValue = true;
-				setState(reference, property, newValue);
+				setState(reference, property, true);
 			})
 			.catch((error) => {
 				console.error(error);

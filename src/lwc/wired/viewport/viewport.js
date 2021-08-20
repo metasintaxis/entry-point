@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 import { history } from 'helper/history';
 import { setState } from 'service/stateManager';
 
-const isRouterVisible = 'isRouterVisible';
+const routerVisibilityProperty = 'isRouterVisible';
 
 export default class Viewport extends LightningElement {
 	@api sections;
@@ -20,20 +20,15 @@ export default class Viewport extends LightningElement {
 	}
 
 	init = () => {
-		this.state.flag = true;
-		this.state[isRouterVisible] = true;
+		this.state[routerVisibilityProperty] = true;
 		this.history = history;
 	};
 
-	handleUrlChange = () => {
-		console.log('urlchange');
-	};
-
 	handlefoo = () => {
-		this.history.pushState(this, isRouterVisible, '/app/sitio/');
+		this.history.pushState(this, routerVisibilityProperty, '/app/sitio/');
 	};
 
 	handlebar = () => {
-		this.history.pushState(this, isRouterVisible, '/app/home/');
+		this.history.pushState(this, routerVisibilityProperty, '/app/home/');
 	};
 }
