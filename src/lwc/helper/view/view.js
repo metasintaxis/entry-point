@@ -7,13 +7,14 @@ export default class View extends LightningElement {
 
 	constructor() {
 		super();
-		this.history = history;
+		this.state.history = history;
 		setState(this, 'isVisible', true);
 	}
 
 	@api
 	push = (path) => {
-		this.history.pushState(this, 'isVisible', path);
+		console.log(this);
+		this.state.history.pushState(this, 'isVisible', path);
 	};
 
 }

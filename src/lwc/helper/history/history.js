@@ -21,11 +21,32 @@ class historyObject {
 		return promise;
 	};
 
+	asyncSetState = (reference, property, value) => {
+		const promise = new Promise((resolve, reject) => {
+			if (value != undefined) {
+				setState(reference, property, value);
+				resolve('Success!');
+			} else {
+				reject('Url is not defined!');
+			}
+		});
+
+		return promise;
+	};
+
 	pushState = (reference, property, path) => {
-		setState(reference, property, false);
-		this.asyncPush(path)
+
+		console.log(reference);
+		console.log(property);
+
+		this.asyncSetState(reference, property, false)
+			.then(() => {
+				return this.asyncPush(path);
+			})
 			.then((message) => {
-				setState(reference, property, true);
+				setTimeout(() => {
+					this.asyncSetState(reference, property, true);
+				},100 );
 			})
 			.catch((error) => {
 				console.error(error);
