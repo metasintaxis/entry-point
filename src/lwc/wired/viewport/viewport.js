@@ -7,8 +7,6 @@ const routerVisibilityProperty = 'isRouterVisible';
 export default class Viewport extends LightningElement {
 	@api sections;
 	@track state = {};
-	path = '';
-	random = 0;
 
 	@wire(historyWire, {
 		reference: '$state',
@@ -32,19 +30,15 @@ export default class Viewport extends LightningElement {
 	}
 
 	init = () => {
-		this.state[routerVisibilityProperty] = true;
+		// this.state[routerVisibilityProperty] = true;
 		// this.history = history;
 	};
 
 	handlefoo = () => {
-		// this.history.pushState(this, routerVisibilityProperty, '/app/sitio/');
-		// this.template.querySelector('helper-view').push('/app/sitio/');
-		this.path = '/app/sitio/';
+		this.template.querySelector('helper-route').push('/app/sitio/');
 	};
 
 	handlebar = () => {
-		// this.template.querySelector('helper-view').push('/app/home/');
-		// this.history.pushState(this, routerVisibilityProperty, '/app/home/');
-		this.path = '/app/home/';
+		this.template.querySelector('helper-route').push('/app/home/');
 	};
 }

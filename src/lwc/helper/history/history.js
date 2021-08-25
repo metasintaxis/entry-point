@@ -9,8 +9,10 @@ class historyObject {
 	}
 
 	asyncPush = (path) => {
+		console.log(path);
 		const promise = new Promise((resolve, reject) => {
 			if (path) {
+				console.log(path);
 				this.dataObject.push(path);
 				resolve('Success!');
 			} else {
