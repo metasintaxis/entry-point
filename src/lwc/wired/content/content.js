@@ -2,7 +2,7 @@ import { LightningElement, track } from 'lwc';
 
 const sections = [
 	{
-		title: 'welcome',
+		title: 'home',
 		backgroundColor: 'flatGray',
 		path: '/app/home/',
 		animationBackground: '--flat-white',
@@ -18,25 +18,27 @@ const sections = [
 	{
 		title: 'proyectos',
 		backgroundColor: 'flatBlue',
-		path: '/app/projects',
+		path: '/app/projects/',
 		animationBackground: '--flat-blue',
 		animationContrast: '--flat-white'
 	},
 	{
 		title: 'blog',
 		backgroundColor: 'flatRed',
-		path: '/app/blog',
+		path: '/app/blog/',
 		animationBackground: '--flat-red',
 		animationContrast: '--flat-white'
 	},
 	{
 		title: 'contacto',
 		backgroundColor: 'flatGreen',
-		path: '/app/contact',
+		path: '/app/contact/',
 		animationBackground: '--flat-green',
 		animationContrast: '--flat-white'
 	}
 ];
+
+const sectionsSet = new Set(sections);
 export default class Content extends LightningElement {
 	@track state = {};
 
@@ -50,8 +52,8 @@ export default class Content extends LightningElement {
 		this.state.selectedSection = sections;
 		this.state.previousSections = [];
 		this.state.nextSections = [];
+		this.state.sectionsSet = sectionsSet;
 	};
-
 
 	handleSegmentAssignment = (nextSegment) => {
 		this.setSections(nextSegment);
@@ -95,5 +97,4 @@ export default class Content extends LightningElement {
 
 		return nextSections;
 	};
-
 }
