@@ -1,38 +1,38 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 const sections = [
 	{
 		title: 'welcome',
 		backgroundColor: 'flatGray',
-		pathsegment: 'home',
+		path: '/app/home/',
 		animationBackground: '--flat-white',
 		animationContrast: '--flat-black'
 	},
 	{
 		title: 'sitio',
 		backgroundColor: 'flatYellow',
-		pathsegment: 'sitio',
+		path: '/app/sitio/',
 		animationBackground: '--flat-yellow',
 		animationContrast: '--flat-white'
 	},
 	{
 		title: 'proyectos',
 		backgroundColor: 'flatBlue',
-		pathsegment: 'proyectos',
+		path: '/app/projects',
 		animationBackground: '--flat-blue',
 		animationContrast: '--flat-white'
 	},
 	{
 		title: 'blog',
 		backgroundColor: 'flatRed',
-		pathsegment: 'blog',
+		path: '/app/blog',
 		animationBackground: '--flat-red',
 		animationContrast: '--flat-white'
 	},
 	{
 		title: 'contacto',
 		backgroundColor: 'flatGreen',
-		pathsegment: 'contact',
+		path: '/app/contact',
 		animationBackground: '--flat-green',
 		animationContrast: '--flat-white'
 	}
