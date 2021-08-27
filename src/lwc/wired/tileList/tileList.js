@@ -1,13 +1,5 @@
-import { LightningElement, api, wire } from 'lwc';
-import { history } from '@lwce/router';
+import { LightningElement, api } from 'lwc';
 
 export default class TileList extends LightningElement {
-	@wire(history) his;
-
-	@api
-	sections;
-
-	handleClick = (event) => {
-		this.his.push();
-	}
+	@api sections;
 }

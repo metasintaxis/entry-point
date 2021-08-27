@@ -2,18 +2,24 @@ import { LightningElement, track, api } from 'lwc';
 import { setState } from 'service/stateManager';
 export default class Viewport extends LightningElement {
 	@api sections;
-	@track state = {};
+	@track state = new Set();
 
 	constructor() {
 		super();
 	}
 
 	connectedCallback() {
-		const sections = this.sections;
-		setState(this, 'siteSection', sections[1]);
+		const sections = [...this.sections];
+
+		const siteSection = sections.find(
+			(section) => section.title == 'sitio'
+		);
+
+		const homeSection = sections.find((section) => section.title == 'home');
+
 		setState(this, 'sections', sections);
-		setState(this, 'homeSection', sections[0]);
-		console.log(this.state.siteSection.path);
+		setState(this, 'homeSection', homeSection);
+		setState(this, 'siteSection', siteSection);
 	}
 
 	handlefoo = () => {

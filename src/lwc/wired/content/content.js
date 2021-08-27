@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
 
-const sections = [
+const sectionList = [
 	{
 		title: 'home',
 		backgroundColor: 'flatGray',
@@ -38,7 +38,7 @@ const sections = [
 	}
 ];
 
-const sectionsSet = new Set(sections);
+const sections = new Set(sectionList);
 export default class Content extends LightningElement {
 	@track state = {};
 
@@ -48,11 +48,10 @@ export default class Content extends LightningElement {
 	}
 
 	init = () => {
-		this.state.sections = sections;
-		this.state.selectedSection = sections;
+		this.state.selectedSection = sectionList;
 		this.state.previousSections = [];
 		this.state.nextSections = [];
-		this.state.sectionsSet = sectionsSet;
+		this.state.sections = sections;
 	};
 
 	handleSegmentAssignment = (nextSegment) => {
