@@ -12,11 +12,11 @@ export default class Tile extends LightningElement {
 		this.state.tileClass = 'item-title ' + backgroundColor;
 	}
 
-	@api get title() {
-		return this.state.title;
+	@api get sectionName() {
+		return this.state.sectionName;
 	}
 
-	set title(title) {
-		this.state.title = title;
+	set sectionName(sectionName) {
+		this.state.sectionName = sectionName;
 	}
 }

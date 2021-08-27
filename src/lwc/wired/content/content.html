@@ -2,7 +2,7 @@
 	<main class="main slds-grid">
 		<wired-sidebar
 			class="slds-size_1-of-8"
-			sections={state.sections}
+			sections={state.previousSections}
 		></wired-sidebar>
 		<wired-viewport
 			class="slds-size_6-of-8"
@@ -10,7 +10,7 @@
 		></wired-viewport>
 		<wired-navigation
 			class="slds-size_1-of-8"
-			sections={state.sections}
+			sections={state.nextSections}
 		></wired-navigation>
 	</main>
 </template>

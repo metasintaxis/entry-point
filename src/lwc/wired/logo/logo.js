@@ -4,6 +4,6 @@ export default class Header extends LightningElement {
 	state = {};
 
 	connectedCallback() {
-		this.state.title = 'the humble crm programmer';
+		this.state.sectionName = 'the humble crm programmer';
 	}
 }

@@ -3,8 +3,8 @@
 		<template for:each={sections} for:item="section">
 			<wired-mark
 				class="wired-container"
-				key={section.title}
-				title={section.title}
+				key={section.sectionName}
+				section-name={section.sectionName}
 				background-color={section.backgroundColor}
 			></wired-mark>
 		</template>

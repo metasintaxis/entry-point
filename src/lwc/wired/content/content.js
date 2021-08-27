@@ -1,44 +1,43 @@
 import { LightningElement, track } from 'lwc';
+import { setState } from 'service/stateManager';
 
-const sectionList = [
+const sections = [
 	{
-		title: 'home',
+		sectionName: 'home',
 		backgroundColor: 'flatGray',
 		path: '/app/home/',
 		animationBackground: '--flat-white',
 		animationContrast: '--flat-black'
 	},
 	{
-		title: 'sitio',
+		sectionName: 'sitio',
 		backgroundColor: 'flatYellow',
 		path: '/app/sitio/',
 		animationBackground: '--flat-yellow',
 		animationContrast: '--flat-white'
 	},
 	{
-		title: 'proyectos',
+		sectionName: 'proyectos',
 		backgroundColor: 'flatBlue',
 		path: '/app/projects/',
 		animationBackground: '--flat-blue',
 		animationContrast: '--flat-white'
 	},
 	{
-		title: 'blog',
+		sectionName: 'blog',
 		backgroundColor: 'flatRed',
 		path: '/app/blog/',
 		animationBackground: '--flat-red',
 		animationContrast: '--flat-white'
 	},
 	{
-		title: 'contacto',
+		sectionName: 'contacto',
 		backgroundColor: 'flatGreen',
 		path: '/app/contact/',
 		animationBackground: '--flat-green',
 		animationContrast: '--flat-white'
 	}
 ];
-
-const sections = new Set(sectionList);
 export default class Content extends LightningElement {
 	@track state = {};
 
@@ -48,52 +47,70 @@ export default class Content extends LightningElement {
 	}
 
 	init = () => {
-		this.state.selectedSection = sectionList;
-		this.state.previousSections = [];
-		this.state.nextSections = [];
+
+		const initialSection = this.findCurrentSection(
+			sections,
+			window.location.pathname
+		);
+		
+		this.setSections(sections, initialSection);
+	};
+
+	setSections = (sections, selectedSection) => {
+		const previousSections = this.getPreviousSections(
+			sections,
+			selectedSection
+		);
+		const nextSections = this.getNextSections(
+			sections,
+			selectedSection
+		);
 		this.state.sections = sections;
-	};
-
-	handleSegmentAssignment = (nextSegment) => {
-		this.setSections(nextSegment);
-	};
-
-	setSections = (segment) => {
-		const sections = this.state.sections;
-		const previousSections = this.getPreviousSections(sections, segment);
-		const nextSections = this.getNextSections(sections, segment);
-
 		this.state.previousSections = previousSections;
 		this.state.nextSections = nextSections;
 	};
 
-	getPreviousSections = (sections, segment) => {
-		const previousSections = [];
+	getSelectedSectionIndex = (sections, selectedSection) => {
+		return sections.findIndex(
+			(section) => section.sectionName === selectedSection.sectionName
+		);
+	};
 
-		for (let i = 0; i < sections.length; ++i) {
-			previousSections.push(sections[i]);
-			if (sections[i].pathsegment == segment) {
-				break;
-			}
-		}
+	getPreviousSections = (sections, selectedSection) => {
+		const selectedSectionIndex = this.getSelectedSectionIndex(
+			sections,
+			selectedSection
+		);
+
+		const previousSections = sections.filter(
+			(section, index) => index <= selectedSectionIndex
+		);
 
 		return previousSections;
 	};
 
-	getNextSections = (sections, segment) => {
-		const nextSections = [];
-		let currentIndex = sections.length;
+	getNextSections = (sections, selectedSection) => {
+		const selectedSectionIndex = this.getSelectedSectionIndex(
+			sections,
+			selectedSection
+		);
 
-		for (let i = 0; i < sections.length; ++i) {
-			if (sections[i].pathsegment == segment) {
-				currentIndex = i;
-			} else {
-				if (currentIndex < i) {
-					nextSections.push(sections[i]);
-				}
-			}
-		}
+		const nextSections = sections.filter(
+			(section, index) => selectedSectionIndex < index
+		);
 
 		return nextSections;
+	};
+
+	findCurrentSection = (sections, pathname) => {
+		const selectedSection = sections.find((section) =>
+			pathname.startsWith(section.path)
+		);
+
+		return selectedSection;
+	};
+
+	handleSectionSelect = (selectedSection) => {
+		// this.template.querySelector();
 	};
 }
