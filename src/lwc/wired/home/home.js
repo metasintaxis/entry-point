@@ -1,14 +1,16 @@
 import { LightningElement, api, track } from 'lwc';
+import { setState } from 'service/stateManager';
 
 export default class Home extends LightningElement {
 	@track state = {};
 	@api section;
 
 	iterator = 0;
-	speed = 60;
+	speed = 56;
 
 	constructor() {
 		super();
+		this.setState = setState.bind(this);
 		this.init();
 	}
 
@@ -36,11 +38,7 @@ export default class Home extends LightningElement {
 	addNextCharacter = () => {
 		const welcomeText =
 			this.state.welcomeText + this.state.textPlaceholder[this.iterator];
-		this.setStateProperty('welcomeText', welcomeText);
+		this.setState('welcomeText', welcomeText);
 		this.iterator++;
-	};
-
-	setStateProperty = (prop, value) => {
-		this.state[prop] = value;
 	};
 }

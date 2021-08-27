@@ -43,11 +43,11 @@ export default class Content extends LightningElement {
 
 	constructor() {
 		super();
+		this.setState = setState.bind(this);
 		this.init();
 	}
 
 	init = () => {
-
 		const initialSection = this.findCurrentSection(
 			sections,
 			window.location.pathname
@@ -65,9 +65,10 @@ export default class Content extends LightningElement {
 			sections,
 			selectedSection
 		);
-		this.state.sections = sections;
-		this.state.previousSections = previousSections;
-		this.state.nextSections = nextSections;
+
+		this.setState('sections', sections);
+		this.setState('previousSections', previousSections);
+		this.setState('nextSections', nextSections);
 	};
 
 	getSelectedSectionIndex = (sections, selectedSection) => {

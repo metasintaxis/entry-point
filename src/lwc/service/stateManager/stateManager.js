@@ -1,8 +1,7 @@
-
-const setState = (reference, property, value) => {
-	const state = reference.state;
+function setState(property, value) {
+	const state = this.state;
 	state[property] = value;
-	reference.state = state;
-};
+	this.state = state;
+}
 
-export {setState};
+export { setState };
