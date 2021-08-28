@@ -20,7 +20,7 @@ export default class Viewport extends LightningElement {
 		const sections = [...this.sections];
 
 		const siteSection = sections.find(
-			(section) => section.sectionName === 'sitio'
+			(section) => section.sectionName === 'site'
 		);
 
 		const homeSection = sections.find(

@@ -77,12 +77,6 @@ html {
 	padding: 0;
 	height: 100%;
 	max-height: 100%;
-
-	background: linear-gradient(90deg, var(--flat-white) 20.4px, transparent 0%)
-			center,
-		linear-gradient(var(--flat-white) 20.4px, transparent 0%) center,
-		var(--dot-color);
-	background-size: 22px 22px;
 }
 
 :focus {

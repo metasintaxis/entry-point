@@ -15,7 +15,7 @@ export default class Home extends LightningElement {
 	}
 
 	init = () => {
-		this.state.textPlaceholder = 'the humble crm programmer';
+		this.state.textPlaceholder = 'the self in the wired';
 		this.state.welcomeText = '';
 	};
 

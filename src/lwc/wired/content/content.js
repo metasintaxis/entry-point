@@ -10,14 +10,14 @@ const sections = [
 		animationContrast: '--flat-black'
 	},
 	{
-		sectionName: 'sitio',
+		sectionName: 'site',
 		backgroundColor: 'flatYellow',
-		path: '/app/sitio/',
+		path: '/app/site/',
 		animationBackground: '--flat-yellow',
 		animationContrast: '--flat-white'
 	},
 	{
-		sectionName: 'proyectos',
+		sectionName: 'projects',
 		backgroundColor: 'flatBlue',
 		path: '/app/projects/',
 		animationBackground: '--flat-blue',
@@ -31,7 +31,7 @@ const sections = [
 		animationContrast: '--flat-white'
 	},
 	{
-		sectionName: 'contacto',
+		sectionName: 'contact',
 		backgroundColor: 'flatGreen',
 		path: '/app/contact/',
 		animationBackground: '--flat-green',
