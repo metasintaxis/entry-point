@@ -6,9 +6,6 @@ export default class MarkList extends LightningElement {
 
 	handleClick = (event) => {
 		event.stopPropagation();
-		const selectedSection = this.sections.find(
-			(section) => section.sectionName === event.target.sectionName
-		);
-		this.handleSectionSelect(selectedSection);
+		this.handleSectionSelect(event);
 	};
 }

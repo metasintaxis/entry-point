@@ -6,8 +6,8 @@ const sections = [
 		sectionName: 'home',
 		backgroundColor: 'flatGray',
 		path: '/app/home/',
-		animationBackground: '--flat-white',
-		animationContrast: '--flat-black'
+		animationBackground: '--flat-gray',
+		animationContrast: '--flat-white'
 	},
 	{
 		sectionName: 'site',
@@ -38,6 +38,7 @@ const sections = [
 		animationContrast: '--flat-white'
 	}
 ];
+
 export default class Content extends LightningElement {
 	@track state = {};
 
@@ -108,10 +109,60 @@ export default class Content extends LightningElement {
 		return selectedSection;
 	};
 
-	handleSectionSelect = (selectedSection) => {
+	handleSectionSelect = (event) => {
+		const componentType = event.target.tagName;
+		const selectedSection = this.state.sections.find(
+			(section) => section.sectionName === event.target.sectionName
+		);
+		this.animateTransition(selectedSection, componentType);
 		this.template
 			.querySelector('wired-viewport')
 			.replaceSection(selectedSection);
 		this.setSections(this.state.sections, selectedSection);
+	};
+
+	animateTransition = (selectedSection, componentType) => {
+		const buttonTypeAnglesRelation = new Map([
+			['WIRED-MARK', 180],
+			['WIRED-TILE', 90]
+		]);
+
+		const animationAngle = buttonTypeAnglesRelation.get(componentType);
+
+		const animationKeyFrames = this.generateKeyFrames(
+			animationAngle,
+			selectedSection.animationBackground,
+			selectedSection.animationContrast
+		);
+
+		this.template.querySelector('.main').animate(animationKeyFrames, {
+			duration: 700,
+			direction: 'reverse'
+		});
+	};
+
+	generateKeyFrames = (
+		angle,
+		animationBackgroundColor,
+		animationContrastColor
+	) => {
+		const animationKeyFrames = [];
+		const frameMidLimit = 100;
+
+		for (let step = 0; step < frameMidLimit; step += 5) {
+			animationKeyFrames.push({
+				background: `linear-gradient(${angle}deg, var(${animationBackgroundColor}) ${step}%, var(--flat-white) ${step}%)`,
+				color: `var(${animationContrastColor})`
+			});
+		}
+
+		for (let step = 0; step < frameMidLimit; step += 5) {
+			animationKeyFrames.push({
+				background: `linear-gradient(${angle}deg, var(--flat-white) ${step}%, var(${animationBackgroundColor}) ${step}%)`,
+				color: `var(${animationContrastColor})`
+			});
+		}
+
+		return animationKeyFrames;
 	};
 }
