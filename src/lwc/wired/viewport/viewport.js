@@ -4,6 +4,13 @@ export default class Viewport extends LightningElement {
 	@api sections = new Set();
 	@track state = {};
 
+	@api
+	replaceSection(selectedSection) {
+		this.template
+			.querySelector('service-helper-route')
+			.push(selectedSection.path);
+	}
+
 	constructor() {
 		super();
 		this.setState = setState.bind(this);
@@ -24,12 +31,4 @@ export default class Viewport extends LightningElement {
 		this.setState('homeSection', homeSection);
 		this.setState('siteSection', siteSection);
 	}
-
-	handlefoo = () => {
-		this.template.querySelector('service-helper-route').push('/app/sitio/');
-	};
-
-	handlebar = () => {
-		this.template.querySelector('service-helper-route').push('/app/home/');
-	};
 }

@@ -48,11 +48,11 @@ export default class Content extends LightningElement {
 	}
 
 	init = () => {
-		const initialSection = this.findCurrentSection(
+		const initialSection = this.findInitialPathSection(
 			sections,
 			window.location.pathname
 		);
-		
+
 		this.setSections(sections, initialSection);
 	};
 
@@ -61,10 +61,7 @@ export default class Content extends LightningElement {
 			sections,
 			selectedSection
 		);
-		const nextSections = this.getNextSections(
-			sections,
-			selectedSection
-		);
+		const nextSections = this.getNextSections(sections, selectedSection);
 
 		this.setState('sections', sections);
 		this.setState('previousSections', previousSections);
@@ -103,7 +100,7 @@ export default class Content extends LightningElement {
 		return nextSections;
 	};
 
-	findCurrentSection = (sections, pathname) => {
+	findInitialPathSection = (sections, pathname) => {
 		const selectedSection = sections.find((section) =>
 			pathname.startsWith(section.path)
 		);
@@ -112,6 +109,9 @@ export default class Content extends LightningElement {
 	};
 
 	handleSectionSelect = (selectedSection) => {
-		// this.template.querySelector();
+		this.template
+			.querySelector('wired-viewport')
+			.replaceSection(selectedSection);
+		this.setSections(this.state.sections, selectedSection);
 	};
 }
