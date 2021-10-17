@@ -1,0 +1,7 @@
+{
+	"extends": "stylelint-config-recommended",
+	"rules": {
+		"value-no-vendor-prefix": true,
+		"selector-max-specificity": "0,2,0"
+	}
+}

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
 
 :root {
 	/* Font-related variables */
@@ -41,7 +42,7 @@
 	--light-green: #4ae3b5;
 
 	--flat-black: #000000;
-	--flat-gray: #707070;
+	--flat-gray: #000000;
 	--flat-white: #f3f3f4;
 	--flat-red: #c75c5c;
 	--flat-orange: #e0995e;
@@ -75,8 +76,8 @@ body,
 html {
 	margin: 0;
 	padding: 0;
-	height: 100%;
-	max-height: 100%;
+	height: 100vh;
+	max-height: 100vh;
 }
 
 :focus {
@@ -109,4 +110,8 @@ html {
 		transform: translate3d(0, 0, 0);
 		opacity: 1;
 	}
+}
+
+p {
+	font-family: 'Space Mono', monospace;
 }

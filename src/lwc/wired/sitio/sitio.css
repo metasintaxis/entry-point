@@ -1,0 +1,31 @@
+p, h1, h2 {
+	font-family: 'Space Mono', monospace;
+}
+
+h1 {
+	text-align: center;
+}
+
+p {
+	text-align: justify;
+}
+
+.container {
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	position: relative;
+	margin: 1rem;
+	height: 90vh;
+	overflow-y: scroll;
+}
+
+.section {
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: 100%;
+}
+
+.content {
+	position: relative;
+}
