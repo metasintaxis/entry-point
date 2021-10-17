@@ -14,16 +14,16 @@ const slides = [
 	{
 		Id: 'css',
 		title: 'css is awesome',
-		headerAlignment: 'end',
+		headerAlignment: 'start',
 		backgroundColor: 'flatYellow',
 		content:
 			'This portal serves as proof of concept of a website built entirely with Lightning Web Components. This technology is a framework developed by Salesforce on top of the Web Components standard, allowing to reuse interfaces inside and outside of the platform. The main target of this technology is the customer experience cloud. But as you can see here, it also can be used to create standalone sites and applications.'
 	},
 	{
 		Id: 'wired',
-		title: 'the Self in the Wired',
+		title: 'the self in the wired',
 		backgroundColor: 'flatRed',
-		headerAlignment: 'start',
+		headerAlignment: 'end',
 		content:
 			'The Wired is a metaphor in the Serial Experiments Lain series that represents a dream/desire of individuals to materialize themselves in an omnipresent digital world. Since The Wired eventually gets merged with the physical world, the individuals that can manipulate the Wired could also modify the reality that initially scared them. I think that any profile in our network responds to this desire of being present in every place, at any time, even in the long past of future generations.'
 	}
