@@ -1,67 +1,16 @@
 <template>
-	<div class="container">
-		<div class="section section0">
-			<div class="content">
-				<h1>Site</h1>
-				<p>
-					This portal serves as proof of concept of a website built
-					entirely with Lightning Web Components. This technology is a
-					framework developed by Salesforce on top of the Web
-					Components standard, allowing to reuse interfaces inside and
-					outside of the platform. The main target of this technology
-					is the customer experience cloud. But as you can see here,
-					it also can be used to create standalone sites and
-					applications.
-				</p>
-				<p></p>
-				<p>This portal is a simple portafolio to show</p>
-				<a style="text-align: center" onclick={scrollToOne}
-					>scroll down</a
-				>
-			</div>
-		</div>
-
-		<div class="section section1">
-			<h2>ES6 & Beyond</h2>
-			<p>
-				This portal serves as proof of concept of a website built
-				entirely with Lightning Web Components. This technology is a
-				framework developed by Salesforce on top of the Web Components
-				standard, allowing to reuse interfaces inside and outside of the
-				platform. The main target of this technology is the customer
-				experience cloud. But as you can see here, it also can be used
-				to create standalone sites and applications.
-			</p>
-			<p></p>
-		</div>
-
-		<div class="section section2">
-			<h2>CSS Is Awesome</h2>
-			<p>
-				This portal serves as proof of concept of a website built
-				entirely with Lightning Web Components. This technology is a
-				framework developed by Salesforce on top of the Web Components
-				standard, allowing to reuse interfaces inside and outside of the
-				platform. The main target of this technology is the customer
-				experience cloud. But as you can see here, it also can be used
-				to create standalone sites and applications.
-			</p>
-			<p></p>
-		</div>
-
-		<div class="section section3">
-			<h2>The Self In The Wired</h2>
-			<p>
-				<i>The Wired</i> is a metaphor in the Serial Experiments Lain
-				series that represents a dream/desire of individuals to
-				materialize themselves in an omnipresent digital world. Since
-				The Wired eventually gets merged with the physical world, the
-				individuals that can manipulate the Wired could also modify the
-				reality that initially scared them. I think that any portfolio
-				or profile in our network responds to this desire of being
-				present in every place, at any time, even in the long past of
-				future generations.
-			</p>
-		</div>
+	<a style="text-align: center">scroll down</a>
+	<div class="slideshow disable-scroll">
+		<template for:each={slides} for:item="slide">
+			<wired-slide
+				key={slide.Id}
+				title={slide.title}
+				content={slide.content}
+				class={slide.Id}
+				header-alignment={slide.headerAlignment}
+				background-color={slide.backgroundColor}
+			></wired-slide>
+		</template>
 	</div>
+	<a style="text-align: center">scroll down</a>
 </template>

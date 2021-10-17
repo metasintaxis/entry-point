@@ -6,7 +6,7 @@ const sections = [
 		sectionName: 'home',
 		backgroundColor: 'flatGray',
 		path: '/app/home/',
-		animationBackground: '--flat-gray',
+		animationBackground: '--flat-black',
 		animationContrast: '--flat-white'
 	},
 	{

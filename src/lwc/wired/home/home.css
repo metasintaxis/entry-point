@@ -11,7 +11,7 @@
 
 .home-text__presentation {
 	text-align: center;
-	color: var(--flat-gray);
+	color: var(--flat-black);
 	font: var(--text-main);
 	display: flex;
 	align-items: center;

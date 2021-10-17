@@ -1,0 +1,46 @@
+@import 'wired/slds';
+
+:host {
+	font-family: 'Space Mono', monospace;
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: 100%;
+}
+
+.slide-header {
+	position: relative;
+}
+
+.header-title {
+	text-align: center;
+	color: var(--flat-white);
+	font-weight: 900;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
+		0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.slide-content {
+	text-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
+	text-align: justify;
+}
+
+.flatYellow {
+	background-color: var(--flat-yellow);
+}
+
+.flatRed {
+	background-color: var(--flat-red);
+}
+
+.flatBlue {
+	background-color: var(--flat-blue);
+}
+
+.flatOrange {
+	background-color: var(--flat-orange);
+}
+
+.flatGreen {
+	background-color: var(--flat-green);
+}
