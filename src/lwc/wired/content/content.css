@@ -12,17 +12,27 @@
 	background-size: 350px 225px;
 }
 
+.transition-block {
+	height: 100vh;
+	max-height: 100vh;
+	max-width: 100%;
+	inset: 0;
+
+	position: fixed;
+}
+
 wired-sidebar {
 	padding: 0.5rem;
 	animation: var(--animation-fade-in) 1s;
 	position: relative;
 	min-height: 100%;
+	z-index: 1;
 }
 
-wired-mark-list {
-	flex: 1 0 0;
-	display: flex;
-	flex-flow: row nowrap;
+wired-navigation {
+	position: relative;
+	min-height: 100%;
+	z-index: 1;
 }
 
 wired-viewport {
