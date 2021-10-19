@@ -48,11 +48,9 @@ export default class Sitio extends LightningElement {
 
 	renderedCallback() {
 		if (this.state.firstTimeRendered) {
-			const slideshow = this.template.querySelector('.slideshow');
-			const currentNodeSelected =
-				this.template.querySelector('.site');
+			const currentNodeSelected = this.template.querySelector('.site');
 			this.setState('currentNodeSelected', currentNodeSelected);
-			slideshow.addEventListener('wheel', this.handleScroll);
+			this.addSlideShowEventListener();
 			this.setState('firstTimeRendered', false);
 		}
 	}
@@ -60,30 +58,34 @@ export default class Sitio extends LightningElement {
 	handleScroll = (event) => {
 		const slideshow = this.template.querySelector('.slideshow');
 		const scrollDirection = this.getVerticalScrollDirection(event);
-		const milisecondsDelay = 900;
+		const milisecondsDelay = 800;
 
 		if (scrollDirection != undefined) {
 			slideshow.removeEventListener('wheel', this.handleScroll, {
 				passive: true
 			});
 			if (scrollDirection === 'forward') {
-				const elementSelected = this.state.currentNodeSelected;
-				const slide = elementSelected.nextElementSibling;
-				if (slide) {
-					slide.scrollIntoView(true);
-					this.setState('currentNodeSelected', slide);
-				}
+				this.goToElement('nextElementSibling');
 			} else {
-				const elementSelected = this.state.currentNodeSelected;
-				const slide = elementSelected.previousElementSibling;
-				if (slide) {
-					slide.scrollIntoView(true);
-					this.setState('currentNodeSelected', slide);
-				}
+				this.goToElement('previousElementSibling');
 			}
 			setTimeout(() => {
-				slideshow.addEventListener('wheel', this.handleScroll);
+				this.addSlideShowEventListener();
 			}, milisecondsDelay);
+		}
+	};
+
+	addSlideShowEventListener = () => {
+		const slideshow = this.template.querySelector('.slideshow');
+		slideshow.addEventListener('wheel', this.handleScroll);
+	};
+
+	goToElement = (property) => {
+		const elementSelected = this.state.currentNodeSelected;
+		const slide = elementSelected[property];
+		if (slide) {
+			slide.scrollIntoView(true);
+			this.setState('currentNodeSelected', slide);
 		}
 	};
 

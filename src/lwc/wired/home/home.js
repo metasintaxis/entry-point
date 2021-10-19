@@ -28,6 +28,9 @@ export default class Home extends LightningElement {
 	renderedCallback() {
 		if (this.charactersRemaining()) {
 			this.typeWriter();
+		} else {
+			const subtitle = this.template.querySelector('.home-text_subtitle');
+			subtitle.classList.remove('slds-hide');
 		}
 	}
 
