@@ -42,6 +42,20 @@ const sections = [
 export default class Content extends LightningElement {
 	@track state = {};
 
+	set sectionAfterAnimation(selectedSection) {
+		setTimeout(() => {
+			this.template
+				.querySelector('wired-viewport')
+				.replaceSection(selectedSection);
+			this.sortSections(this.state.sections, selectedSection);
+			this.setState('selectedSection', selectedSection);
+		}, this.state.sectionTransitionDuration);
+	}
+
+	get sectionAfterAnimation() {
+		return this.state.selectedSection;
+	}
+
 	constructor() {
 		super();
 		this.setState = setState.bind(this);
@@ -54,10 +68,11 @@ export default class Content extends LightningElement {
 			window.location.pathname
 		);
 
-		this.setSections(sections, initialSection);
+		this.sortSections(sections, initialSection);
+		this.setState('sectionTransitionDuration', 700);
 	};
 
-	setSections = (sections, selectedSection) => {
+	sortSections = (sections, selectedSection) => {
 		const previousSections = this.getPreviousSections(
 			sections,
 			selectedSection
@@ -115,10 +130,6 @@ export default class Content extends LightningElement {
 			(section) => section.sectionName === event.target.sectionName
 		);
 		this.animateTransition(selectedSection, componentType);
-		this.template
-			.querySelector('wired-viewport')
-			.replaceSection(selectedSection);
-		this.setSections(this.state.sections, selectedSection);
 	};
 
 	animateTransition = (selectedSection, componentType) => {
@@ -136,9 +147,11 @@ export default class Content extends LightningElement {
 		);
 
 		this.template.querySelector('.main').animate(animationKeyFrames, {
-			duration: 700,
+			duration: this.state.sectionTransitionDuration,
 			direction: 'reverse'
 		});
+
+		this.sectionAfterAnimation = selectedSection;
 	};
 
 	generateKeyFrames = (
