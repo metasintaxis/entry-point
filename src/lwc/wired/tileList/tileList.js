@@ -6,6 +6,8 @@ export default class TileList extends LightningElement {
 
 	handleClick = (event) => {
 		event.stopPropagation();
+		const element = event.target;
+		element.classList.add('transparent-block');
 		this.handleSectionSelect(event);
 	};
 }

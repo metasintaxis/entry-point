@@ -70,6 +70,8 @@ export default class Content extends LightningElement {
 		this.setState('sectionTransitionDuration', 700);
 	};
 
+	sortSections = (sections, selectedSection, source) => {};
+
 	sortSections = (sections, selectedSection) => {
 		const previousSections = this.getPreviousSections(
 			sections,

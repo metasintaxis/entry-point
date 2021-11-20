@@ -19,4 +19,11 @@ export default class Tile extends LightningElement {
 	set sectionName(sectionName) {
 		this.state.sectionName = sectionName;
 	}
+
+	handleTileSelection = (event) => {
+		// const element = event.target;
+		// console.log(element);
+		// element.classList.add('slds-hide');
+	}
+
 }
