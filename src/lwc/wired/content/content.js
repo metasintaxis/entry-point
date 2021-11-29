@@ -6,36 +6,31 @@ const sections = [
 		sectionName: 'home',
 		backgroundColor: 'flatGray',
 		path: '/app/home/',
-		animationBackground: '--flat-black',
-		animationContrast: '--flat-white'
+		animationBackground: '--flat-red'
 	},
 	{
 		sectionName: 'site',
 		backgroundColor: 'flatYellow',
 		path: '/app/site/',
-		animationBackground: '--flat-yellow',
-		animationContrast: '--flat-white'
+		animationBackground: '--flat-yellow'
 	},
 	{
 		sectionName: 'projects',
 		backgroundColor: 'flatBlue',
 		path: '/app/projects/',
-		animationBackground: '--flat-blue',
-		animationContrast: '--flat-white'
+		animationBackground: '--flat-blue'
 	},
 	{
 		sectionName: 'blog',
 		backgroundColor: 'flatRed',
 		path: '/app/blog/',
-		animationBackground: '--flat-red',
-		animationContrast: '--flat-white'
+		animationBackground: '--flat-red'
 	},
 	{
 		sectionName: 'contact',
 		backgroundColor: 'flatGreen',
 		path: '/app/contact/',
-		animationBackground: '--flat-green',
-		animationContrast: '--flat-white'
+		animationBackground: '--flat-green'
 	}
 ];
 
@@ -49,6 +44,9 @@ export default class Content extends LightningElement {
 				.replaceSection(selectedSection);
 			this.sortSections(this.state.sections, selectedSection);
 			this.setState('selectedSection', selectedSection);
+			this.template
+				.querySelector('.transition-block')
+				.classList.add('slds-hide');
 		}, this.state.sectionTransitionDuration);
 	}
 
@@ -71,6 +69,8 @@ export default class Content extends LightningElement {
 		this.sortSections(sections, initialSection);
 		this.setState('sectionTransitionDuration', 700);
 	};
+
+	sortSections = (sections, selectedSection, source) => {};
 
 	sortSections = (sections, selectedSection) => {
 		const previousSections = this.getPreviousSections(
@@ -129,10 +129,10 @@ export default class Content extends LightningElement {
 		const selectedSection = this.state.sections.find(
 			(section) => section.sectionName === event.target.sectionName
 		);
-		this.animateTransition(selectedSection, componentType);
+		this.animateTransitionBlock(selectedSection, componentType);
 	};
 
-	animateTransition = (selectedSection, componentType) => {
+	animateTransitionBlock = (selectedSection, componentType) => {
 		const buttonTypeAnglesRelation = new Map([
 			['WIRED-MARK', 180],
 			['WIRED-TILE', 90]
@@ -142,37 +142,36 @@ export default class Content extends LightningElement {
 
 		const animationKeyFrames = this.generateKeyFrames(
 			animationAngle,
-			selectedSection.animationBackground,
-			selectedSection.animationContrast
+			selectedSection.animationBackground
 		);
 
-		this.template.querySelector('.main').animate(animationKeyFrames, {
-			duration: this.state.sectionTransitionDuration,
-			direction: 'reverse'
-		});
+		this.template
+			.querySelector('.transition-block')
+			.animate(animationKeyFrames, {
+				duration: this.state.sectionTransitionDuration,
+				direction: 'reverse'
+			});
+
+		this.template
+			.querySelector('.transition-block')
+			.classList.remove('slds-hide');
 
 		this.sectionAfterAnimation = selectedSection;
 	};
 
-	generateKeyFrames = (
-		angle,
-		animationBackgroundColor,
-		animationContrastColor
-	) => {
+	generateKeyFrames = (angle, animationBackgroundColor) => {
 		const animationKeyFrames = [];
 		const frameMidLimit = 100;
 
 		for (let step = 0; step < frameMidLimit; step += 5) {
 			animationKeyFrames.push({
-				background: `linear-gradient(${angle}deg, var(${animationBackgroundColor}) ${step}%, var(--flat-white) ${step}%)`,
-				color: `var(${animationContrastColor})`
+				background: `linear-gradient(${angle}deg, var(${animationBackgroundColor}) ${step}%, var(--flat-white) ${step}%)`
 			});
 		}
 
 		for (let step = 0; step < frameMidLimit; step += 5) {
 			animationKeyFrames.push({
-				background: `linear-gradient(${angle}deg, var(--flat-white) ${step}%, var(${animationBackgroundColor}) ${step}%)`,
-				color: `var(${animationContrastColor})`
+				background: `linear-gradient(${angle}deg, rgba(255,255,255,0) ${step}%, var(${animationBackgroundColor}) ${step}%)`
 			});
 		}
 

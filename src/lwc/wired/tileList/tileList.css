@@ -1,3 +1,9 @@
+@import 'wired/slds';
+
+.transparent-block {
+	opacity: 0;
+}
+
 .navigation-tiles {
 	height: 100%;
 	display: flex;
