@@ -19,10 +19,4 @@ export default class Mark extends LightningElement {
 		this.state.boxClass = 'mark__box ' + backgroundColor;
 	}
 
-	@api pathSegment;
-
-
-	handleBoxClick = (event) => {
-
-	}
 }

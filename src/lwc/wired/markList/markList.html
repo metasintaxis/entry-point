@@ -1,8 +1,7 @@
 <template>
-	<div class="mark-list wired-container wired-vertical-grid_reversed">
+	<div class="mark-list slds-p-around_xx-large">
 		<template for:each={sections} for:item="section">
 			<wired-mark
-				class="wired-container"
 				key={section.sectionName}
 				section-name={section.sectionName}
 				background-color={section.backgroundColor}

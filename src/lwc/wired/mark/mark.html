@@ -1,6 +1,8 @@
 <template>
-	<div class="wired-container wired-vertical-align-center">
+	<div class="slds-grid  slds-grid_align-end">
+		<div section-name={sectionName} class="mark__title slds-p-right_medium ">
+			{state.sectionName}
+		</div>
 		<div onclick={handleBoxClick} class={state.boxClass}></div>
-		<div section-name={sectionName} class="mark__title">{state.sectionName}</div>
 	</div>
 </template>

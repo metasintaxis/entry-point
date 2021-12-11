@@ -19,11 +19,14 @@
 }
 
 .mark__title {
-	margin-left: 1rem;
-	max-width: 2rem;
 	font-family: 'Space Mono', monospace;
-	/* opacity: 0; */
+	visibility: hidden;
 }
+
+.flatWhite {
+	background-color: var(--flat-white);
+}
+
 .flatYellow {
 	background-color: var(--flat-yellow);
 }

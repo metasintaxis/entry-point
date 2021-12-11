@@ -1,19 +1,5 @@
 <template>
-	<main class="main slds-grid">
-		<wired-sidebar
-			class="slds-size_1-of-8"
-			sections={state.previousSections}
-			handle-section-select={handleSectionSelect}
-		></wired-sidebar>
-		<wired-viewport
-			class="slds-size_6-of-8"
-			sections={state.sections}
-		></wired-viewport>
-		<wired-navigation
-			class="slds-size_1-of-8"
-			sections={state.nextSections}
-			handle-section-select={handleSectionSelect}
-		></wired-navigation>
-		<div class="transition-block slds-hide"></div>
+	<main>
+		<wired-home sections={state.sections}></wired-home>
 	</main>
 </template>

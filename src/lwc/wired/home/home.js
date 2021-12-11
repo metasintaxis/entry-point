@@ -4,6 +4,7 @@ import { setState } from 'service/stateManager';
 export default class Home extends LightningElement {
 	@track state = {};
 	@api section;
+	@api sections = [];
 
 	iterator = 0;
 	speed = 56;

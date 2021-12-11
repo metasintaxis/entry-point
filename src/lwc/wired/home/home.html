@@ -1,8 +1,36 @@
 <template>
-	<div class="home-text__presentation">
-		<p class="slds-p-right_large slds-p-left_large">{state.welcomeText}</p>
-	</div>
-	<div class="home-text_subtitle slds-p-top_xx-large slds-hide">
-		<p>I'm Ángel Alberto, a Salesforce Developer based in Mexico City.</p>
+	<div class="home-main">
+		<div class="home_top slds-grid">
+			<div class="slds-size_9-of-12">
+				<div class="slds-text-align_left">
+					<div class="home-text_presentation slds-p-around_large ">
+						THE SELF IN THE WIRED
+					</div>
+				</div>
+			</div>
+			<div class="slds-size_3-of-12">
+				<wired-mark-list sections={sections}></wired-mark-list>
+			</div>
+		</div>
+		<div class="home_bottom">
+			<div class="container">
+				<div
+					class="
+						text-justified
+						slds-p-around_xx-large
+						foo
+					"
+				>
+					DEPLOY YOUR SALES INFRASTRUCTURE; REFACTOR AND SCALE YOUR
+					CURRENT IMPLEMENTATION; BE READY FOR THE UPCOMING CLOUD
+					TECHNOLOGIES.
+				</div>
+				<div class="bar">
+					<div class="home-text_presentation slds-p-around_large home-secondary-box">
+						SALESFORCE DEVELOPMENT
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>

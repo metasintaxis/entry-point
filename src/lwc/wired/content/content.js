@@ -3,31 +3,31 @@ import { setState } from 'service/stateManager';
 
 const sections = [
 	{
-		sectionName: 'home',
-		backgroundColor: 'flatGray',
+		sectionName: 'HOME',
+		backgroundColor: 'flatWhite',
 		path: '/app/home/',
-		animationBackground: '--flat-red'
+		animationBackground: '--flat-white'
 	},
 	{
-		sectionName: 'site',
+		sectionName: 'SITE',
 		backgroundColor: 'flatYellow',
 		path: '/app/site/',
 		animationBackground: '--flat-yellow'
 	},
 	{
-		sectionName: 'projects',
+		sectionName: 'PROJECTS',
 		backgroundColor: 'flatBlue',
 		path: '/app/projects/',
 		animationBackground: '--flat-blue'
 	},
 	{
-		sectionName: 'blog',
-		backgroundColor: 'flatRed',
+		sectionName: 'BLOG',
+		backgroundColor: 'flatOrange',
 		path: '/app/blog/',
 		animationBackground: '--flat-red'
 	},
 	{
-		sectionName: 'contact',
+		sectionName: 'CONTACT',
 		backgroundColor: 'flatGreen',
 		path: '/app/contact/',
 		animationBackground: '--flat-green'
