@@ -48,6 +48,7 @@
 
 .foo {
 	flex: 1 0 0;
+	color: var(--flat-white);
 }
 
 .bar {
@@ -58,7 +59,7 @@
 }
 
 .home-main {
-	min-height: 100%;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;

@@ -1,8 +1,10 @@
 <template>
-	<div class="slds-grid  slds-grid_align-end">
-		<div section-name={sectionName} class="mark__title slds-p-right_medium ">
+	<div class="slds-grid slds-grid_align-end ">
+		<div section-name={sectionName} class="mark__title slds-p-right_medium">
 			{state.sectionName}
 		</div>
-		<div onclick={handleBoxClick} class={state.boxClass}></div>
+		<div class="box-container">
+			<div onclick={handleBoxClick} class={state.boxClass}></div>
+		</div>
 	</div>
 </template>

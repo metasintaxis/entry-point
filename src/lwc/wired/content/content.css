@@ -3,8 +3,7 @@
 main {
 	font-family: var(--content-font-family);
 	min-height: 100vh;
-	max-height: 100vh;
-	max-width: 100%;
+	max-width: 100vw;
 	overflow: hidden;
 	inset: 0;
 
@@ -15,7 +14,24 @@ main {
 	background-color: var(--flat-red);
 }
 
-
-wired-home {
+.absolute-container {
 	min-height: 100vh;
+	position: absolute;
+}
+
+.fixed-container {
+	position: fixed;
+}
+
+
+@media all and (orientation: landscape) {
+	wired-navigation {
+		right: 4vh;
+	}
+}
+
+@media all and (orientation: portrait) {
+	wired-navigation {
+		right: 4vw;
+	}
 }

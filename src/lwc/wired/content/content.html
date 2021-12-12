@@ -1,5 +1,12 @@
 <template>
 	<main>
-		<wired-home sections={state.sections}></wired-home>
+		<wired-home
+			sections={state.sections}
+			class="absolute-container"
+		></wired-home>
+		<wired-navigation
+			sections={state.sections}
+			class="fixed-container"
+		></wired-navigation>
 	</main>
 </template>

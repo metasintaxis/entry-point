@@ -1,0 +1,14 @@
+:host {
+}
+
+@media all and (orientation: landscape) {
+	:host {
+		height: 27vh;
+	}
+}
+
+@media all and (orientation: portrait) {
+	:host {
+		height: 23vw;
+	}
+}
