@@ -1,9 +1,16 @@
 <template>
-	<div class="slds-grid slds-grid_align-end ">
-		<div section-name={sectionName} class="mark__title slds-p-right_medium">
+	<div class="slds-grid slds-grid_align-end">
+		<div
+			section-name={sectionName}
+			class="mark__title slds-hide slds-p-right_medium"
+		>
 			{state.sectionName}
 		</div>
-		<div class="box-container">
+		<div
+			class="box-container slds-p-bottom_x-small"
+			onmouseover={handleMouseOver}
+			onmouseout={handleMouseOut}
+		>
 			<div onclick={handleBoxClick} class={state.boxClass}></div>
 		</div>
 	</div>

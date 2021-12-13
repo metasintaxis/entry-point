@@ -14,6 +14,13 @@ main {
 	background-color: var(--flat-red);
 }
 
+.transition-container {
+	position: fixed;
+	background-color: var(--flat-blue);
+	width: 100vw;
+	height: 100vh;
+}
+
 .absolute-container {
 	min-height: 100vh;
 	position: absolute;

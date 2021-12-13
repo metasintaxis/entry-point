@@ -19,4 +19,13 @@ export default class Mark extends LightningElement {
 		this.state.boxClass = 'mark__box ' + backgroundColor;
 	}
 
+	handleMouseOver(event) {
+		this.template
+			.querySelector('.mark__title')
+			.classList.remove('slds-hide');
+	}
+
+	handleMouseOut(event) {
+		this.template.querySelector('.mark__title').classList.add('slds-hide');
+	}
 }

@@ -11,11 +11,13 @@
 
 .text-justified {
 	color: var(--flat-black);
+	text-align: justify;
+	text-justify: inter-character;
 
 }
 
 .home-text_presentation {
-	font-size: 7vw;
+	font-size: 9vw;
 }
 
 .home-secondary-box {
