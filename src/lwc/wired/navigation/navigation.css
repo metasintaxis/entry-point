@@ -1,5 +1,4 @@
-:host {
-}
+@import 'wired/slds';
 
 @media all and (orientation: landscape) {
 	:host {

@@ -7,8 +7,6 @@ main {
 	overflow: hidden;
 	inset: 0;
 
-	padding: 4vh 0 0 4vh;
-
 	position: fixed;
 
 	background-color: var(--flat-red);
@@ -21,15 +19,9 @@ main {
 	height: 100vh;
 }
 
-.absolute-container {
-	min-height: 100vh;
-	position: absolute;
-}
-
 .fixed-container {
 	position: fixed;
 }
-
 
 @media all and (orientation: landscape) {
 	wired-navigation {
@@ -41,4 +33,8 @@ main {
 	wired-navigation {
 		right: 4vw;
 	}
+}
+
+wired-viewport {
+	height: 100vh;
 }
