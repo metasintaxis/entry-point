@@ -19,6 +19,10 @@
 	align-items: center;
 }
 
+.opacity-0 {
+	opacity: 0;
+}
+
 .mark__title {
 	color: var(--flat-white);
 }

@@ -22,10 +22,10 @@ export default class Mark extends LightningElement {
 	handleMouseOver(event) {
 		this.template
 			.querySelector('.mark__title')
-			.classList.remove('slds-hide');
+			.classList.remove('opacity-0');
 	}
 
 	handleMouseOut(event) {
-		this.template.querySelector('.mark__title').classList.add('slds-hide');
+		this.template.querySelector('.mark__title').classList.add('opacity-0');
 	}
 }
