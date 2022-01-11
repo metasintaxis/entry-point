@@ -126,9 +126,13 @@ export default class Content extends LightningElement {
 
 	handleSectionSelect = (event) => {
 		const componentType = event.target.tagName;
+		
+		console.log(componentType);
+
 		const selectedSection = this.state.sections.find(
 			(section) => section.sectionName === event.target.sectionName
 		);
+
 		this.animateTransitionBlock(selectedSection, componentType);
 	};
 
@@ -165,7 +169,7 @@ export default class Content extends LightningElement {
 
 		for (let step = 0; step < frameMidLimit; step += 5) {
 			animationKeyFrames.push({
-				background: `linear-gradient(${angle}deg, var(${animationBackgroundColor}) ${step}%, var(--flat-white) ${step}%)`
+				background: `linear-gradient(${angle}deg, var(${animationBackgroundColor}) ${step}%, rgba(255,255,255,0) ${step}%)`
 			});
 		}
 

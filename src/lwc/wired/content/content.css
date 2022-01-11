@@ -12,7 +12,7 @@ main {
 	background-color: var(--flat-red);
 }
 
-.transition-container {
+.transition-block {
 	position: fixed;
 	background-color: var(--flat-blue);
 	width: 100vw;
