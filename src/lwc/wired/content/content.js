@@ -44,9 +44,9 @@ export default class Content extends LightningElement {
 				.replaceSection(selectedSection);
 			this.sortSections(this.state.sections, selectedSection);
 			this.setState('selectedSection', selectedSection);
-			this.template
-				.querySelector('.transition-block')
-				.classList.add('slds-hide');
+			// this.template
+			// 	.querySelector('.transition-block')
+			// 	.classList.add('slds-hide');
 		}, this.state.sectionTransitionDuration);
 	}
 
@@ -69,6 +69,27 @@ export default class Content extends LightningElement {
 		this.sortSections(sections, initialSection);
 		this.setState('sectionTransitionDuration', 700);
 	};
+
+	renderedCallback() {
+		const transitionBlock =
+			this.template.querySelector('.transition-block');
+		console.log(transitionBlock);
+		transitionBlock
+			.addEventListener('animationstart', () => {
+				console.log('foo');
+			});
+		transitionBlock
+			.addEventListener('animationstart', () => {
+				console.log('foo');
+			});
+
+		transitionBlock
+			.addEventListener('animationcancel', () => {
+				console.log('foo');
+			});
+		// this.template.querySelector('.transition-block').addEventListener('click', () => { console.log('foo');});
+		console.log('event handler added');
+	}
 
 	sortSections = (sections, selectedSection, source) => {};
 
@@ -126,8 +147,6 @@ export default class Content extends LightningElement {
 
 	handleSectionSelect = (event) => {
 		const componentType = event.target.tagName;
-		
-		console.log(componentType);
 
 		const selectedSection = this.state.sections.find(
 			(section) => section.sectionName === event.target.sectionName
@@ -156,29 +175,35 @@ export default class Content extends LightningElement {
 				direction: 'reverse'
 			});
 
-		this.template
-			.querySelector('.transition-block')
-			.classList.remove('slds-hide');
+		// this.template
+		// 	.querySelector('.transition-block')
+		// 	.classList.remove('slds-hide');
 
-		this.sectionAfterAnimation = selectedSection;
+		// this.sectionAfterAnimation = selectedSection;
 	};
 
 	generateKeyFrames = (angle, animationBackgroundColor) => {
 		const animationKeyFrames = [];
 		const frameMidLimit = 100;
 
-		for (let step = 0; step < frameMidLimit; step += 5) {
+		for (let step = 0; step < frameMidLimit; step += 1) {
 			animationKeyFrames.push({
+				animationTimingFunction: 'ease-in-out',
 				background: `linear-gradient(${angle}deg, var(${animationBackgroundColor}) ${step}%, rgba(255,255,255,0) ${step}%)`
 			});
 		}
 
-		for (let step = 0; step < frameMidLimit; step += 5) {
+		for (let step = 0; step < frameMidLimit; step += 1) {
 			animationKeyFrames.push({
+				animationTimingFunction: 'ease-in-out',
 				background: `linear-gradient(${angle}deg, rgba(255,255,255,0) ${step}%, var(${animationBackgroundColor}) ${step}%)`
 			});
 		}
 
 		return animationKeyFrames;
+	};
+
+	handleAnimation = (event) => {
+		console.log('animation ended');
 	};
 }
