@@ -14,7 +14,6 @@ main {
 
 .transition-block {
 	position: fixed;
-	background-color: var(--flat-blue);
 	width: 100vw;
 	height: 100vh;
 }

@@ -24,7 +24,7 @@ const sections = [
 		sectionName: 'BLOG',
 		backgroundColor: 'flatOrange',
 		path: '/app/blog/',
-		animationBackground: '--flat-red'
+		animationBackground: '--flat-orange'
 	},
 	{
 		sectionName: 'CONTACT',
@@ -38,16 +38,11 @@ export default class Content extends LightningElement {
 	@track state = {};
 
 	set sectionAfterAnimation(selectedSection) {
-		setTimeout(() => {
-			this.template
-				.querySelector('wired-viewport')
-				.replaceSection(selectedSection);
-			this.sortSections(this.state.sections, selectedSection);
-			this.setState('selectedSection', selectedSection);
-			// this.template
-			// 	.querySelector('.transition-block')
-			// 	.classList.add('slds-hide');
-		}, this.state.sectionTransitionDuration);
+		this.template
+			.querySelector('wired-viewport')
+			.replaceSection(selectedSection);
+		this.sortSections(this.state.sections, selectedSection);
+		this.setState('selectedSection', selectedSection);
 	}
 
 	get sectionAfterAnimation() {
@@ -67,29 +62,8 @@ export default class Content extends LightningElement {
 		);
 
 		this.sortSections(sections, initialSection);
-		this.setState('sectionTransitionDuration', 700);
+		this.setState('sectionTransitionDuration', 450);
 	};
-
-	renderedCallback() {
-		const transitionBlock =
-			this.template.querySelector('.transition-block');
-		console.log(transitionBlock);
-		transitionBlock
-			.addEventListener('animationstart', () => {
-				console.log('foo');
-			});
-		transitionBlock
-			.addEventListener('animationstart', () => {
-				console.log('foo');
-			});
-
-		transitionBlock
-			.addEventListener('animationcancel', () => {
-				console.log('foo');
-			});
-		// this.template.querySelector('.transition-block').addEventListener('click', () => { console.log('foo');});
-		console.log('event handler added');
-	}
 
 	sortSections = (sections, selectedSection, source) => {};
 
@@ -155,6 +129,17 @@ export default class Content extends LightningElement {
 		this.animateTransitionBlock(selectedSection, componentType);
 	};
 
+	showTransitionBlock = () => {
+		const showPromise = new Promise((resolve) => {
+			const transitionBlock =
+				this.template.querySelector('.transition-block');
+			transitionBlock.classList.remove('slds-hide');
+			resolve();
+		});
+
+		return showPromise;
+	};
+
 	animateTransitionBlock = (selectedSection, componentType) => {
 		const buttonTypeAnglesRelation = new Map([
 			['WIRED-MARK', 180],
@@ -168,21 +153,55 @@ export default class Content extends LightningElement {
 			selectedSection.animationBackground
 		);
 
-		this.template
-			.querySelector('.transition-block')
-			.animate(animationKeyFrames, {
-				duration: this.state.sectionTransitionDuration,
-				direction: 'reverse'
+		const transitionBlock =
+			this.template.querySelector('.transition-block');
+
+		this.showTransitionBlock()
+			.then((result) => {
+				const animationPromise = new Promise((resolve, reject) => {
+					const animation = transitionBlock.animate(
+						animationKeyFrames,
+						{
+							duration: this.state.sectionTransitionDuration,
+							direction: 'reverse',
+							fill: 'forwards'
+						}
+					);
+
+					animation.onfinish = () => {
+						console.log('animation finished');
+						resolve();
+					};
+				});
+
+				return animationPromise;
+			})
+			.then(() => {
+				this.sectionAfterAnimation = selectedSection;
+
+				const complementaryKeyFrames =
+					this.generateComplementaryKeyFrames(
+						animationAngle,
+						selectedSection.animationBackground
+					);
+
+				const complementaryAnimation = transitionBlock.animate(
+					complementaryKeyFrames,
+					{
+						duration: this.state.sectionTransitionDuration,
+						direction: 'reverse',
+						fill: 'forwards'
+					}
+				);
+
+				complementaryAnimation.onfinish = () => {
+					transitionBlock.classList.add('slds-hide');
+					console.log('complementary animation finished');
+				};
 			});
-
-		// this.template
-		// 	.querySelector('.transition-block')
-		// 	.classList.remove('slds-hide');
-
-		// this.sectionAfterAnimation = selectedSection;
 	};
 
-	generateKeyFrames = (angle, animationBackgroundColor) => {
+	generateComplementaryKeyFrames = (angle, animationBackgroundColor) => {
 		const animationKeyFrames = [];
 		const frameMidLimit = 100;
 
@@ -192,6 +211,13 @@ export default class Content extends LightningElement {
 				background: `linear-gradient(${angle}deg, var(${animationBackgroundColor}) ${step}%, rgba(255,255,255,0) ${step}%)`
 			});
 		}
+
+		return animationKeyFrames;
+	};
+
+	generateKeyFrames = (angle, animationBackgroundColor) => {
+		const animationKeyFrames = [];
+		const frameMidLimit = 100;
 
 		for (let step = 0; step < frameMidLimit; step += 1) {
 			animationKeyFrames.push({
