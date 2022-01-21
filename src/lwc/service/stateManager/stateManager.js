@@ -1,7 +1,6 @@
-function setState(property, value) {
+function setState(partialState) {
 	const state = this.state;
-	state[property] = value;
-	this.state = state;
+	this.state = Object.assign({}, state, partialState);
 }
 
 export { setState };

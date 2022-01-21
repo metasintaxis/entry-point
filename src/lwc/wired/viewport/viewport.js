@@ -27,8 +27,10 @@ export default class Viewport extends LightningElement {
 			(section) => section.sectionName === 'HOME'
 		);
 
-		this.setState('sections', sections);
-		this.setState('homeSection', homeSection);
-		this.setState('siteSection', siteSection);
+		this.setState({
+			sections: sections,
+			homeSection: homeSection,
+			siteSection: siteSection
+		});
 	}
 }

@@ -42,7 +42,7 @@ export default class Home extends LightningElement {
 	addNextCharacter = () => {
 		const welcomeText =
 			this.state.welcomeText + this.state.textPlaceholder[this.iterator];
-		this.setState('welcomeText', welcomeText);
+		this.setState({ welcomeText: welcomeText });
 		this.iterator++;
 	};
 }

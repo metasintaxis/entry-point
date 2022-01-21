@@ -42,7 +42,7 @@ export default class Content extends LightningElement {
 			.querySelector('wired-viewport')
 			.replaceSection(selectedSection);
 		this.sortSections(this.state.sections, selectedSection);
-		this.setState('selectedSection', selectedSection);
+		this.setState({ selectedSection: selectedSection });
 	}
 
 	get sectionAfterAnimation() {
@@ -62,7 +62,7 @@ export default class Content extends LightningElement {
 		);
 
 		this.sortSections(sections, initialSection);
-		this.setState('sectionTransitionDuration', 450);
+		this.setState({ sectionTransitionDuration: 450 });
 	};
 
 	sortSections = (sections, selectedSection, source) => {};
@@ -74,9 +74,11 @@ export default class Content extends LightningElement {
 		);
 		const nextSections = this.getNextSections(sections, selectedSection);
 
-		this.setState('sections', sections);
-		this.setState('previousSections', previousSections);
-		this.setState('nextSections', nextSections);
+		this.setState({
+			sections: sections,
+			previousSections: previousSections,
+			nextSections: nextSections
+		});
 	};
 
 	getSelectedSectionIndex = (sections, selectedSection) => {

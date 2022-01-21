@@ -41,17 +41,19 @@ export default class Sitio extends LightningElement {
 	}
 
 	init = () => {
-		this.setState('slides', slides);
-		this.setState('firstTimeRendered', true);
-		this.setState('currentNodeSelected', null);
+		this.setState({
+			slides: slides,
+			firstTimeRendered: true,
+			currentNodeSelected: {}
+		});
 	};
 
 	renderedCallback() {
 		if (this.state.firstTimeRendered) {
 			const currentNodeSelected = this.template.querySelector('.site');
-			this.setState('currentNodeSelected', currentNodeSelected);
+			this.setState({currentNodeSelected: currentNodeSelected});
 			this.addSlideShowEventListener();
-			this.setState('firstTimeRendered', false);
+			this.setState({firstTimeRendered: false});
 		}
 	}
 
@@ -85,7 +87,7 @@ export default class Sitio extends LightningElement {
 		const slide = elementSelected[property];
 		if (slide) {
 			slide.scrollIntoView(true);
-			this.setState('currentNodeSelected', slide);
+			this.setState({currentNodeSelected: slide});
 		}
 	};
 
