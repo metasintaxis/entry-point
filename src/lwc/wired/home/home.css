@@ -66,4 +66,5 @@
 	flex-direction: column;
 	flex-wrap: wrap;
 	color: var(--flat-white);
+	background-color: var(--flat-red);
 }

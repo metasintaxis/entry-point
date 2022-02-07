@@ -18,6 +18,7 @@ export default class Home extends LightningElement {
 	init = () => {
 		this.state.textPlaceholder = 'the self in the wired';
 		this.state.welcomeText = '';
+		this.state.homeMain = 'home-main background';
 	};
 
 	typeWriter = () => {

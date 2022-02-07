@@ -4,31 +4,31 @@ import { setState } from 'service/stateManager';
 const sections = [
 	{
 		sectionName: 'HOME',
-		backgroundColor: 'flatWhite',
+		markColor: 'flatWhite',
 		path: '/app/home/',
 		animationBackground: '--flat-white'
 	},
 	{
 		sectionName: 'SITE',
-		backgroundColor: 'flatYellow',
+		markColor: 'flatYellow',
 		path: '/app/site/',
 		animationBackground: '--flat-yellow'
 	},
 	{
 		sectionName: 'PROJECTS',
-		backgroundColor: 'flatBlue',
+		markColor: 'flatBlue',
 		path: '/app/projects/',
 		animationBackground: '--flat-blue'
 	},
 	{
 		sectionName: 'BLOG',
-		backgroundColor: 'flatOrange',
+		markColor: 'flatOrange',
 		path: '/app/blog/',
 		animationBackground: '--flat-orange'
 	},
 	{
 		sectionName: 'CONTACT',
-		backgroundColor: 'flatGreen',
+		markColor: 'flatGreen',
 		path: '/app/contact/',
 		animationBackground: '--flat-green'
 	}
@@ -122,13 +122,11 @@ export default class Content extends LightningElement {
 	};
 
 	handleSectionSelect = (event) => {
-		const componentType = event.target.tagName;
-
 		const selectedSection = this.state.sections.find(
 			(section) => section.sectionName === event.target.sectionName
 		);
 
-		this.animateTransitionBlock(selectedSection, componentType);
+		this.animateTransitionBlock(selectedSection);
 	};
 
 	showTransitionBlock = () => {
@@ -142,16 +140,14 @@ export default class Content extends LightningElement {
 		return showPromise;
 	};
 
-	animateTransitionBlock = (selectedSection, componentType) => {
-		const buttonTypeAnglesRelation = new Map([
-			['WIRED-MARK', 180],
-			['WIRED-TILE', 90]
-		]);
+	animateTransitionBlock = (selectedSection) => {
+		const animationAngles = [0, 45, 90, 135, 180, 225, 270, 315];
 
-		const animationAngle = buttonTypeAnglesRelation.get(componentType);
+		const effectiveAngle =
+			animationAngles[Math.floor(Math.random() * animationAngles.length)];
 
 		const animationKeyFrames = this.generateKeyFrames(
-			animationAngle,
+			effectiveAngle,
 			selectedSection.animationBackground
 		);
 
@@ -183,7 +179,7 @@ export default class Content extends LightningElement {
 
 				const complementaryKeyFrames =
 					this.generateComplementaryKeyFrames(
-						animationAngle,
+						effectiveAngle,
 						selectedSection.animationBackground
 					);
 

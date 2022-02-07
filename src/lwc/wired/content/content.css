@@ -8,8 +8,6 @@ main {
 	inset: 0;
 
 	position: fixed;
-
-	background-color: var(--flat-red);
 }
 
 .transition-block {
