@@ -6,31 +6,31 @@ const sections = [
 		sectionName: 'HOME',
 		markColor: 'flatRed',
 		path: '/app/home/',
-		animationBackground: '--flat-red'
+		animationBackground: '--flat-white'
 	},
 	{
 		sectionName: 'SITE',
 		markColor: 'flatYellow',
 		path: '/app/site/',
-		animationBackground: '--flat-yellow'
+		animationBackground: '--flat-green'
 	},
 	{
 		sectionName: 'PROJECTS',
 		markColor: 'flatBlue',
 		path: '/app/projects/',
-		animationBackground: '--flat-blue'
+		animationBackground: '--flat-orange'
 	},
 	{
 		sectionName: 'BLOG',
 		markColor: 'flatOrange',
 		path: '/app/blog/',
-		animationBackground: '--flat-orange'
+		animationBackground: '--flat-blue'
 	},
 	{
 		sectionName: 'CONTACT',
 		markColor: 'flatGreen',
 		path: '/app/contact/',
-		animationBackground: '--flat-green'
+		animationBackground: '--flat-yellow'
 	}
 ];
 

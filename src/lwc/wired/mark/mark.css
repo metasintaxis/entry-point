@@ -26,6 +26,7 @@
 
 .mark__title {
 	color: var(--flat-white);
+	font-weight: 900;
 }
 
 .flatRedComplentary {

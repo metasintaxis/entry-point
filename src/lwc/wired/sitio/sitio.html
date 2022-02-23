@@ -1,14 +1,16 @@
 <template>
-	<div class="slideshow disable-scroll">
-		<template for:each={slides} for:item="slide">
-			<wired-slide
-				key={slide.Id}
-				title={slide.title}
-				content={slide.content}
-				class={slide.Id}
-				header-alignment={slide.headerAlignment}
-				background-color={slide.backgroundColor}
-			></wired-slide>
-		</template>
+	<div class="site-main">
+		<div class="slideshow disable-scroll">
+			<template for:each={slides} for:item="slide">
+				<wired-slide
+					key={slide.Id}
+					title={slide.title}
+					content={slide.content}
+					class={slide.Id}
+					header-alignment={slide.headerAlignment}
+					background-color={slide.backgroundColor}
+				></wired-slide>
+			</template>
+		</div>
 	</div>
 </template>
