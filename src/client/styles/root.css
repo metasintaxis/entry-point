@@ -61,7 +61,8 @@
 	--flat-blue-aqua: #0a9ad7;
 	--flat-green: #76c2af;
 	--flat-yellow: #f5cf87;
-
+	--flat-yellow-complementary: #87ADF5;
+	--flat-red-complementary: #5cc7c7;
 	--main-sidebar-color-pink: #fd0054;
 	--main-sidebar-icon-white: #fbf9fa;
 	--main-content-color-light: var(--light-dark-text-content);

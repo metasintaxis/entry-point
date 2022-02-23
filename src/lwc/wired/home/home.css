@@ -9,23 +9,16 @@
 	}
 }
 
-.text-justified {
-	color: var(--flat-black);
-	text-align: justify;
-	text-justify: inter-character;
-
-}
-
 .home-text_presentation {
 	font-size: 9vw;
 }
 
-.home-secondary-box {
+.right-section_secondary-box {
 	background-color: var(--flat-white);
 	color: var(--flat-black);
 	flex: 1 0 0;
+	font-size: 9vw;
 }
-
 
 .home-text_subtitle {
 	animation-name: fadeIn;
@@ -47,13 +40,14 @@
 	flex-flow: column;
 }
 
-
-.foo {
+.home-bottom_left-section {
 	flex: 1 0 0;
 	color: var(--flat-white);
+	text-align: justify;
+	text-justify: inter-character;
 }
 
-.bar {
+.home-bottom_right-section {
 	flex: 3 0 0;
 	display: flex;
 	flex-flow: column;

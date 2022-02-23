@@ -4,9 +4,9 @@ import { setState } from 'service/stateManager';
 const sections = [
 	{
 		sectionName: 'HOME',
-		markColor: 'flatWhite',
+		markColor: 'flatRed',
 		path: '/app/home/',
-		animationBackground: '--flat-white'
+		animationBackground: '--flat-red'
 	},
 	{
 		sectionName: 'SITE',
